@@ -1,12 +1,17 @@
 /**
- * Puente Digital 2.0 - Mi Compañero Digital (AIService)
- * Motor de Inteligencia Pedagógica y Acompañamiento Empático para Personas Mayores.
- * Diseñado con respuestas por pasos numerados, lenguaje sin tecnicismos y acciones directas.
+ * Puente Digital - Servicio de Inteligencia Artificial (AIService)
+ * Trabajo Integrador Final
+ * Autores: Calogerópulos Alexandro, Centurión Tomás Gabriel, Centurion Valeria Analia, Mari Rony Sebastián, Rodríguez Santiago Adrián
+ * 
+ * Gestiona la interacción con el modelo de Inteligencia Artificial (Backend API / Gemini)
+ * y el reconocimiento/síntesis de voz para personas mayores.
  */
 
 const AIService = (() => {
-  // Base de Conocimiento Educativa Integrada con PUENTE_DATA
-  const KNOWLEDGE_BASE = [
+  const API_ENDPOINT = '/api/ai/chat';
+
+  // Base de conocimiento local estructurada para respuestas pedagógicas inmediatas (Offline First)
+  const LOCAL_KNOWLEDGE = [
     {
       keywords: ['foto', 'fotografía', 'imagen', 'mandar foto', 'enviar foto', 'galeria', 'adjuntar'],
       title: 'Cómo enviar una fotografía por WhatsApp',
@@ -99,98 +104,79 @@ const AIService = (() => {
       title: 'Cómo reconocer un mensaje falso o estafa',
       answer: 'Tu tranquilidad y seguridad son lo más valioso. Prestá atención a estas 3 señales:',
       steps: [
-        '1. La urgencia: Si te dicen "Tu cuenta se bloqueará en 5 minutos", respirá hondo. El banco nunca te apura.',
-        '2. Las claves: Jamás des tu contraseña, usuario ni código de seguridad por mensaje ni por llamada.',
-        '3. El familiar con número nuevo: Si te escribe alguien diciendo que es tu hijo o nieto y pide plata urgente, llamalo a su número de siempre para escuchar su voz real.'
+        'Si te dicen que ganaste un premio de un sorteo donde nunca te anotaste, es falso.',
+        'Si te apuran diciendo que "bloquean tu cuenta en 24 horas", buscan asustarte para que no pienses.',
+        'Ningún banco ni organismo público te va a pedir tu contraseña por WhatsApp o llamada.'
       ],
-      tip: '💡 Podés entrenar tu ojo con nuestro Detector de Estafas interactivo.',
+      tip: '🛑 Recordá: Ante la mínima duda, cortá la llamada o no respondas y consultá con alguien de tu confianza.',
       action: {
         type: 'OPEN_SIMULATOR',
         target: 'scam-modal',
-        label: '🛡️ Practicar en el Detector de Estafas'
+        label: '🧪 Practicar en el Detector de Estafas'
       }
     },
     {
-      keywords: ['turno', 'medico', 'pami', 'anses', 'doctor', 'clinica', 'sacar turno', 'hospital'],
-      title: 'Cómo sacar un turno médico por Internet sin hacer filas',
-      answer: 'Sacar turnos por Internet te ahorra madrugar y hacer colas en la calle. Es muy sencillo:',
+      keywords: ['turno', 'medico', 'pami', 'anses', 'remedio', 'receta', 'farmacia'],
+      title: 'Cómo gestionar turnos y trámites oficiales',
+      answer: 'Hacer trámites desde el teléfono te ahorra filas largas y viajes cansadores:',
       steps: [
-        'Tené a mano tu DNI físico y tu carnet de PAMI o credencial médica sobre la mesa.',
-        'Entrá únicamente a la página web oficial (ejemplo: pami.org.ar o anses.gob.ar).',
-        'Buscá el botón grande que dice "Solicitar Turno" o "Turnos Online".',
-        'Elegí el día y la hora que te queden más cómodos.',
-        'Sacale una foto a la pantalla con otro celular o anotá el número de turno en tu libreta.'
+        'Instalá la aplicación oficial del organismo (ejemplo: "PAMI Móvil" o "Mi ANSES").',
+        'Ingresá con tu número de DNI y tu clave de seguridad social.',
+        'Buscá la sección que dice "Turnos" o "Cartilla Médica".',
+        'Elegí el día y horario que te quede cómodo y guardá la constancia.'
       ],
-      tip: '💡 Las páginas oficiales del Estado terminan siempre en ".gob.ar".',
+      tip: '💡 Podés practicar buscando la aplicación de PAMI en nuestro Simulador de Play Store.',
+      action: {
+        type: 'OPEN_SIMULATOR',
+        target: 'playstore-modal',
+        label: '📲 Ir al Simulador de Descargas'
+      }
+    },
+    {
+      keywords: ['wifi', 'wi-fi', 'internet', 'datos', 'conectar internet', 'red'],
+      title: 'Cómo conectarte a la red Wi-Fi de tu casa',
+      answer: 'Estar conectado a Wi-Fi te permite navegar todo lo que quieras sin gastar crédito:',
+      steps: [
+        'Deslizá el dedo desde arriba de la pantalla de tu celular hacia abajo.',
+        'Buscá el ícono que parece un abanico o arco de ondas (📶) y mantenelo apretado.',
+        'Tocá el nombre de la red de tu casa.',
+        'Escribí la contraseña (está anotada en la etiqueta del módem) respetando mayúsculas.',
+        'Tocá "Conectar" y ¡listo!'
+      ],
+      tip: '💡 Cuando estás conectado a Wi-Fi, el dibujo del abanico aparece arriba en la esquinita de tu pantalla.',
       action: {
         type: 'OPEN_LESSON',
-        target: 'c2-4',
-        label: '📖 Ver lección de Turnos Médicos'
+        target: 'c1-2',
+        label: '📖 Ver lección de Conexiones'
       }
     },
     {
-      keywords: ['wifi', 'wi-fi', 'internet', 'conectar', 'red', 'modem', 'abanico', 'ondas'],
-      title: 'Cómo conectarse a la red Wi-Fi de tu casa',
-      answer: 'El Wi-Fi es la conexión invisible de tu casa que te permite navegar gratis:',
+      keywords: ['letra', 'agrandar letra', 'no veo bien', 'letra chica', 'zoom', 'texto grande'],
+      title: 'Cómo agrandar las letras para leer sin esfuerzo',
+      answer: 'No tenés por qué forzar la vista; podés poner el tamaño de letra que te sea cómodo:',
       steps: [
-        'Fijate arriba a la derecha de la pantalla: el símbolo de Wi-Fi parece un abanico con ondas.',
-        'Entrá en "Ajustes" o "Configuración" de tu celular.',
-        'Tocá donde dice "Wi-Fi" o "Conexiones".',
-        'Elegí el nombre de la red de tu casa.',
-        'Escribí la contraseña que está anotada en la etiqueta debajo del módem.'
+        'En esta misma pantalla, mirá arriba a la derecha.',
+        'Tocá el botón "A+ (Grande)" o "A++ (Muy Grande)" para agrandar todo de inmediato.',
+        'En tu celular, podés ir a Ajustes ⚙️ > Pantalla > Tamaño de fuente.'
       ],
-      tip: '💡 Respetá las mayúsculas y minúsculas tal cual están en la etiqueta del módem.',
+      tip: '👓 También podés activar el botón "🌙 Alto Contraste" arriba para leer letras claras sobre fondo oscuro.',
       action: {
-        type: 'OPEN_LESSON',
-        target: 'c1-3',
-        label: '📖 Ver lección de Conexión Wi-Fi'
+        type: 'CUSTOM',
+        target: 'SET_FONT_LARGE',
+        label: '🔍 Agrandar letra ahora'
       }
     },
     {
-      keywords: ['teclado', 'escribir', 'borrar', 'dictar', 'microfono teclado', 'letras', 'numeros'],
-      title: 'Escribir con el teclado y dictar con la voz',
-      answer: 'Escribir en la pantalla táctil no tiene por qué ser molesto:',
+      keywords: ['bateria', 'cargar', 'cargador', 'se apaga', 'ahorro de bateria', 'duracion'],
+      title: 'Cuidados para que la batería de tu celular dure más',
+      answer: 'Cuidar la batería de tu teléfono es sencillo:',
       steps: [
-        'La tecla con una cruz (⌫) borra la última letra si te equivocaste.',
-        'La barra larga de abajo sirve para dejar espacio entre palabras.',
-        'El gran truco: en el teclado hay un pequeño micrófono (🎤). Si lo tocás, podés hablarle y el celular escribirá solito lo que decís.',
-        'Para poner números, tocá la tecla "?123" en la esquina.'
+        'No esperes a que se apague en 0% para cargarlo; ponelo a cargar cuando llegue al 20%.',
+        'Usá siempre el cargador original o uno de buena calidad para cuidar el teléfono.',
+        'Bajá un poquito el brillo de la pantalla cuando estés dentro de casa.',
+        'Desactivá la ubicación (GPS) cuando no estés usando mapas para viajar.'
       ],
-      tip: '💡 Dictarle al celular es la forma más cómoda para descansar los dedos.',
-      action: {
-        type: 'OPEN_LESSON',
-        target: 'c1-4',
-        label: '📖 Ver lección del Teclado y Dictado'
-      }
-    },
-    {
-      keywords: ['clave', 'contraseña', 'password', 'olvidar', 'segura', 'proteger'],
-      title: 'Cómo crear contraseñas fáciles de recordar y difíciles de adivinar',
-      answer: 'El truco de la frase conocida es la mejor forma de no olvidarte tus claves:',
-      steps: [
-        'Pensá en una frase que te guste mucho (ej: "Mi nieto Mateo nació en el 2018!").',
-        'Tomá la primera letra de cada palabra: MnMne2018!',
-        'Queda una clave súper fuerte que ningún programa puede adivinar.',
-        'Anotala en un cuaderno exclusivo en un cajón seguro de tu casa.'
-      ],
-      tip: '🚫 Nunca uses 123456, tu fecha de nacimiento ni tu nombre de pila.',
-      action: {
-        type: 'OPEN_LESSON',
-        target: 'c3-1',
-        label: '📖 Ver lección de Contraseñas Seguras'
-      }
-    },
-    {
-      keywords: ['romper', 'miedo', 'desconfigurar', 'toque', 'pantalla tactil', 'gestos'],
-      title: 'La regla más importante: ¡Tocar la pantalla no rompe nada!',
-      answer: 'Queremos que recuerdes siempre esto con total tranquilidad:',
-      steps: [
-        'Tocar un botón por error no puede romper el celular ni la computadora.',
-        'Siempre hay una flechita de marcha atrás (←) para volver a donde estabas.',
-        'El toque debe ser suave con la yema del dedo, como acariciando una burbuja.',
-        'Para agrandar fotos o letras, separá dos dedos sobre la pantalla despacio.'
-      ],
-      tip: '✨ En Puente Digital podés equivocarte tantas veces como quieras. Estamos para acompañarte.',
+      tip: '💡 Dejarlo cargando toda la noche no rompe los teléfonos modernos; cortan la carga automáticamente al llegar al 100%.',
       action: {
         type: 'OPEN_LESSON',
         target: 'c1-1',
@@ -199,28 +185,24 @@ const AIService = (() => {
     }
   ];
 
-  // Proveedor de API externo opcional (ej: Gemini API en backend)
-  let externalApiProvider = null;
-
-  // Analizador de intención en lenguaje natural
-  function queryLocalKnowledge(userText) {
-    if (!userText || typeof userText !== 'string') return null;
-    const cleanText = userText
+  // Coincidencia heurística local
+  function matchLocalKnowledge(text) {
+    if (!text || typeof text !== 'string') return null;
+    const cleanText = text
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Quitar tildes para matching tolerante
+      .replace(/[\u0300-\u036f]/g, '')
       .trim();
 
-    // 1. Buscar coincidencia por palabras clave
     let bestMatch = null;
     let highestScore = 0;
 
-    for (const item of KNOWLEDGE_BASE) {
+    for (const item of LOCAL_KNOWLEDGE) {
       let score = 0;
       for (const kw of item.keywords) {
         const cleanKw = kw.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         if (cleanText.includes(cleanKw)) {
-          score += cleanKw.length; // Priorizar palabras clave más específicas
+          score += cleanKw.length;
         }
       }
       if (score > highestScore) {
@@ -233,7 +215,6 @@ const AIService = (() => {
       return bestMatch;
     }
 
-    // 2. Respuesta general empática por defecto
     return {
       title: 'Estoy aquí para acompañarte',
       answer: '¡Qué buena pregunta! En Puente Digital vamos paso a paso para que aprendas sin presiones.',
@@ -251,34 +232,41 @@ const AIService = (() => {
     };
   }
 
-  // Método principal para responder
+  // Consulta principal a la Inteligencia Artificial
   async function ask(query) {
-    // Si hay un proveedor externo configurado, intentar utilizarlo
-    if (externalApiProvider && typeof externalApiProvider === 'function') {
-      try {
-        const externalResponse = await externalApiProvider(query);
-        if (externalResponse) return externalResponse;
-      } catch (err) {
-        console.warn('AIService: Proveedor externo falló, recurriendo al conocimiento local', err);
+    // 1. Intentar consultar el endpoint del backend con Inteligencia Artificial
+    try {
+      const response = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.success && data.result) {
+          return data.result;
+        }
       }
+    } catch (err) {
+      // Si el servidor backend no está activo o se corre localmente sin conexión, pasar al motor local
     }
 
-    // Respuesta inmediata con base de conocimiento local
-    const result = queryLocalKnowledge(query);
-    return result;
+    // 2. Respuesta pedagógica local inmediata
+    return matchLocalKnowledge(query);
   }
 
-  // --- Soporte para Reconocimiento de Voz (Speech to Text) ---
+  // Reconocimiento de voz mediante Web Speech API
   let recognitionInstance = null;
 
   function isSpeechRecognitionSupported() {
     return ('webkitSpeechRecognition' in window) || ('SpeechRecognition' in window);
   }
 
-  function startSpeechRecognition(onResult, onError, onEnd) {
+  function startSpeechRecognition(options = {}) {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      if (onError) onError('Tu navegador no soporta dictado por voz.');
+      if (options.onError) options.onError('El navegador no soporta reconocimiento de voz.');
       return null;
     }
 
@@ -293,21 +281,21 @@ const AIService = (() => {
 
     recognitionInstance.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      if (onResult) onResult(transcript);
+      if (options.onResult) options.onResult(transcript);
     };
 
     recognitionInstance.onerror = (event) => {
-      if (onError) onError(event.error);
+      if (options.onError) options.onError(event.error);
     };
 
     recognitionInstance.onend = () => {
-      if (onEnd) onEnd();
+      if (options.onEnd) options.onEnd();
     };
 
     try {
       recognitionInstance.start();
     } catch (err) {
-      if (onError) onError(err);
+      if (options.onError) options.onError(err);
     }
 
     return recognitionInstance;
@@ -320,20 +308,15 @@ const AIService = (() => {
     }
   }
 
-  function setApiProvider(providerFn) {
-    externalApiProvider = providerFn;
-  }
-
   return {
     ask,
-    queryLocalKnowledge,
     isSpeechRecognitionSupported,
     startSpeechRecognition,
     stopSpeechRecognition,
-    setApiProvider,
-    KNOWLEDGE_BASE
+    LOCAL_KNOWLEDGE
   };
 })();
 
-// Exportar globalmente
+// Exportación global
 window.AIService = AIService;
+window.CompanionService = AIService;

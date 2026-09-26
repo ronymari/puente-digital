@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWhatsAppSimulator();
   initLessonModal();
   initHelpModal();
-  initAiCompanion();
+  initCompanion();
   initSosModal();
   initProfileModal();
   initTutorModal();
@@ -1371,7 +1371,7 @@ function initDashboard2() {
   // Vincular botones globales para abrir modales 2.0
   document.querySelectorAll('.trigger-open-companion').forEach(btn => {
     btn.addEventListener('click', () => {
-      openModal(document.getElementById('ai-companion-modal'));
+      openModal(document.getElementById('companion-modal'));
     });
   });
 
@@ -1450,12 +1450,12 @@ function renderDashboard2() {
 }
 
 /* --------------------------------------------------------------------------
-   15. MI COMPAÑERO DIGITAL 2.0 (ASISTENCIA CON IA Y VOZ)
+   15. MI COMPAÑERO DIGITAL 2.0 (ASISTENCIA Y VOZ)
    -------------------------------------------------------------------------- */
-let lastAiResponseText = '';
+let lastCompanionResponseText = '';
 
-function initAiCompanion() {
-  const modal = document.getElementById('ai-companion-modal');
+function initCompanion() {
+  const modal = document.getElementById('companion-modal');
   const btnTop = document.getElementById('btn-top-companion');
   const btnSend = document.getElementById('btn-companion-send');
   const btnMic = document.getElementById('btn-companion-mic');
@@ -1505,8 +1505,9 @@ function initAiCompanion() {
   // Dictado por voz
   if (btnMic) {
     btnMic.addEventListener('click', () => {
-      if (!window.AIService) return;
-      if (!AIService.isSpeechRecognitionSupported()) {
+      const service = window.CompanionService;
+      if (!service) return;
+      if (!service.isSpeechRecognitionSupported()) {
         showToast('Micrófono no soportado', 'Tu navegador no permite dictado por voz directo. Puedes escribir tu pregunta en la casilla.', 'warning');
         return;
       }
@@ -1514,7 +1515,7 @@ function initAiCompanion() {
       if (micIndicator) micIndicator.style.display = 'inline-block';
       btnMic.classList.add('recording-pulse');
 
-      AIService.startSpeechRecognition({
+      service.startSpeechRecognition({
         onResult: (transcript) => {
           if (inputEl) inputEl.value = transcript;
           handleCompanionSubmit(transcript);
@@ -1535,8 +1536,8 @@ function initAiCompanion() {
   // Escuchar última respuesta
   if (btnReadLast) {
     btnReadLast.addEventListener('click', () => {
-      if (lastAiResponseText) {
-        speakText(lastAiResponseText);
+      if (lastCompanionResponseText) {
+        speakText(lastCompanionResponseText);
       } else {
         speakText('Hola, estoy aquí para responder tus dudas de tecnología sin palabras raras.');
       }
@@ -1548,31 +1549,32 @@ function initAiCompanion() {
 
     // Mensaje del usuario
     const userBubble = document.createElement('div');
-    userBubble.className = 'ai-msg ai-bubble-user';
+    userBubble.className = 'companion-msg companion-bubble-user';
     userBubble.innerHTML = `
-      <div class="ai-msg-sender">👤 Tú:</div>
-      <div class="ai-msg-text">${escapeHtml(query)}</div>
+      <div class="companion-msg-sender">👤 Tú:</div>
+      <div class="companion-msg-text">${escapeHtml(query)}</div>
     `;
     streamEl.appendChild(userBubble);
     streamEl.scrollTop = streamEl.scrollHeight;
 
-    // Mensaje de carga/pensamiento
+    // Mensaje de carga/pensamiento con IA
     const thinkingBubble = document.createElement('div');
-    thinkingBubble.className = 'ai-msg ai-bubble-bot';
+    thinkingBubble.className = 'companion-msg companion-bubble-bot';
     thinkingBubble.innerHTML = `
-      <div class="ai-msg-sender">🤖 Mi Compañero:</div>
-      <div class="ai-msg-text"><em>Pensando con calma y preparando los pasos para vos... ⏳</em></div>
+      <div class="companion-msg-sender">🤖 Mi Compañero con IA:</div>
+      <div class="companion-msg-text"><em>Consultando a la Inteligencia Artificial con calma... ⏳</em></div>
     `;
     streamEl.appendChild(thinkingBubble);
     streamEl.scrollTop = streamEl.scrollHeight;
 
-    // Obtener respuesta de AIService
-    const result = await AIService.ask(query);
+    // Obtener respuesta del servicio de Inteligencia Artificial
+    const service = window.AIService || window.CompanionService;
+    const result = await service.ask(query);
 
     let stepsHtml = '';
     if (result.steps && result.steps.length > 0) {
       stepsHtml = `
-        <ol class="ai-steps-list" style="margin: 10px 0 10px 20px; line-height: 1.6;">
+        <ol class="companion-steps-list" style="margin: 10px 0 10px 20px; line-height: 1.6;">
           ${result.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
         </ol>
       `;
@@ -1581,15 +1583,15 @@ function initAiCompanion() {
     let actionBtnHtml = '';
     if (result.action) {
       actionBtnHtml = `
-        <button class="btn-primary btn-ai-action" data-action-type="${result.action.type}" data-action-target="${result.action.target}" style="margin-top: 12px; font-size: 0.95rem; min-height: 44px;">
+        <button class="btn-primary btn-companion-action" data-action-type="${result.action.type}" data-action-target="${result.action.target}" style="margin-top: 12px; font-size: 0.95rem; min-height: 44px;">
           ${result.action.label}
         </button>
       `;
     }
 
     thinkingBubble.innerHTML = `
-      <div class="ai-msg-sender">🤖 Mi Compañero:</div>
-      <div class="ai-msg-text">
+      <div class="companion-msg-sender">🤖 Mi Compañero con IA:</div>
+      <div class="companion-msg-text">
         <div style="font-weight: 700; margin-bottom: 6px; font-size: 1.1rem; color: var(--color-primary);">${result.title}</div>
         <div>${result.answer}</div>
         ${stepsHtml}
@@ -1599,7 +1601,7 @@ function initAiCompanion() {
     `;
 
     // Vincular botón de acción
-    const actBtn = thinkingBubble.querySelector('.btn-ai-action');
+    const actBtn = thinkingBubble.querySelector('.btn-companion-action');
     if (actBtn) {
       actBtn.addEventListener('click', () => {
         const aType = actBtn.getAttribute('data-action-type');
@@ -1624,7 +1626,7 @@ function initAiCompanion() {
     }
 
     streamEl.scrollTop = streamEl.scrollHeight;
-    lastAiResponseText = result.fullTextForSpeech || `${result.title}. ${result.answer}`;
+    lastCompanionResponseText = result.fullTextForSpeech || `${result.title}. ${result.answer}`;
 
     unlockAchievementWithToast('ach-ai-friend');
   }

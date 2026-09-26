@@ -50,14 +50,17 @@ PUENTE DIGITAL/
 ├── manifest.json         # Manifiesto PWA para instalación móvil
 ├── sw.js                 # Service Worker para funcionamiento offline
 ├── server.js             # Servidor HTTP local Node.js
-├── iniciar_servidor.bat  # Acceso directo para iniciar el servidor en Windows
+├── iniciar_servidor.bat  # Acceso directo para iniciar con Node.js en Windows
+├── server.py             # Servidor Backend en Python (REST API + SQLite + Estáticos)
+├── iniciar_servidor_python.bat # Acceso directo para iniciar con Python en Windows
+├── requirements.txt      # Especificación de dependencias Python
 ├── .gitignore            # Exclusiones de control de versiones
 ├── css/
 │   └── styles.css        # Sistema de diseño responsivo, accesibilidad gerontológica y alto contraste
 ├── js/
 │   ├── courses-data.js   # Catálogo completo de cursos, lecciones, simuladores y evaluación
 │   ├── storage-service.js# Persistencia local (progreso, logros, preferencias y certificados)
-│   ├── ai-service.js     # Motor pedagógico de acompañamiento por voz e inteligencia
+│   ├── ai-service.js     # Motor del Compañero Digital con Inteligencia Artificial y voz
 │   └── app.js            # Lógica interactiva, autenticación, simuladores y modales
 ├── assets/
 │   ├── logo-puente-digital.png # Logotipo oficial en mapa de bits
@@ -72,11 +75,16 @@ PUENTE DIGITAL/
 
 ## 🚀 Cómo Abrir y Probar la Plataforma
 
-### Opción A: Con Servidor Local (Recomendado para PWA y Sonido)
+### Opción A: Con Servidor Python + Base de Datos SQLite (Recomendado)
+1. Haz doble clic en `iniciar_servidor_python.bat` (o ejecuta `python server.py`).
+2. Se iniciará el servidor con base de datos SQLite y se abrirá tu navegador en **http://localhost:8000**.
+3. Incluye endpoints REST para autenticación, persistencia de certificados y detector heurístico de estafas en `/api/`.
+
+### Opción B: Con Servidor Node.js
 1. Haz doble clic en `iniciar_servidor.bat` (o ejecuta `node server.js` en tu terminal).
 2. Abre tu navegador en **http://localhost:3000**.
 
-### Opción B: Directo en el Navegador
+### Opción C: Directo en el Navegador
 1. Haz doble clic en el archivo `index.html`.
 2. Se abrirá de inmediato en tu navegador preferido (Chrome, Edge, Firefox, etc.).
 

@@ -1,3 +1,9 @@
+/**
+ * Puente Digital - Servidor HTTP Local con Soporte para API de IA
+ * Trabajo Integrador Final
+ * Autores: Calogerópulos Alexandro, Centurión Tomás Gabriel, Centurion Valeria Analia, Mari Rony Sebastián, Rodríguez Santiago Adrián
+ */
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -22,14 +28,105 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf'
 };
 
+function resolveAiResponse(query) {
+  const q = (query || '').toLowerCase();
+  if (q.includes('foto') || q.includes('imagen') || q.includes('galeria')) {
+    return {
+      title: 'Cómo mandar una fotografía por WhatsApp',
+      answer: '¡Es muy lindo compartir fotos con la familia! Vamos paso a paso sin apurarnos:',
+      steps: [
+        'Abrí WhatsApp y tocá el chat de la persona a quien querés mandarle la foto.',
+        'Al lado de donde escribís, buscá el dibujito del ganchito de papel (📎) o la camarita (📷).',
+        'Tocá la opción "Galería" para ver todas tus fotos.',
+        'Elegí la foto que te guste tocándola una vez.',
+        'Presioná el botón circular verde con la flechita para enviarla.'
+      ],
+      tip: '💡 Podés practicar esto ahora mismo en nuestro Simulador de WhatsApp sin ningún peligro.',
+      source: 'ia-educativa'
+    };
+  }
+  if (q.includes('audio') || q.includes('voz') || q.includes('microfono')) {
+    return {
+      title: 'Cómo mandar un mensaje de voz o audio',
+      answer: 'Mandar audios es ideal para no cansar los dedos escribiendo. Es muy fácil:',
+      steps: [
+        'Entrá al chat de tu familiar en WhatsApp.',
+        'Abajo a la derecha verás un botón verde con el dibujo de un micrófono (🎤).',
+        'Mantenelo apretado con la yema del dedo mientras hablás despacio y claro.',
+        'Cuando termines de hablar, soltá el botón y el audio se enviará solito.'
+      ],
+      tip: '💡 Si te cansás de mantener apretado, deslizá el dedo hacia arriba hasta el candadito para hablar sin sostener.',
+      source: 'ia-educativa'
+    };
+  }
+  if (q.includes('descargar') || q.includes('instalar') || q.includes('play store') || q.includes('app')) {
+    return {
+      title: 'Cómo descargar una aplicación de forma segura',
+      answer: 'Descargar aplicaciones en tu celular es totalmente seguro si seguís esta regla de oro:',
+      steps: [
+        'Buscá en tu celular el ícono con forma de triángulo de colores llamado "Play Store".',
+        'Arriba en la barra de búsqueda escribí el nombre de la app (ej: "PAMI Móvil").',
+        'Fijate bien que diga el creador oficial y no tenga la palabra "Anuncio" o "Patrocinado".',
+        'Tocá el botón verde "Instalar" una sola vez y esperá a que diga "Abrir".'
+      ],
+      tip: '🛡️ Regla de oro: Jamás descargues aplicaciones de enlaces que te manden por mensajes desconocidos.',
+      source: 'ia-educativa'
+    };
+  }
+  return {
+    title: 'Compañero Digital con Inteligencia Artificial',
+    answer: `¡Qué buena pregunta sobre "${query}"! En Puente Digital vamos paso a paso con paciencia:`,
+    steps: [
+      'Podés recorrer las lecciones interactivas de nuestros 3 niveles en la sección "Aprender".',
+      'Podés practicar en los simuladores de teléfono sin miedo a cometer errores.',
+      'Si tenés dudas, tocá el botón "Escuchar" para oír cualquier lección leída con calma.'
+    ],
+    tip: '💡 Preguntame: "¿Cómo mando una foto?", "¿Qué significan los tildes?" o "¿Cómo detectar una estafa?".',
+    source: 'ia-educativa'
+  };
+}
+
 function createServer(port) {
   const server = http.createServer((req, res) => {
     let cleanUrl = req.url.split('?')[0];
+
+    // Endpoint de Inteligencia Artificial
+    if (cleanUrl === '/api/ai/chat' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        let payload = {};
+        try {
+          payload = JSON.parse(body || '{}');
+        } catch (e) {
+          const match = body.match(/"?query"?\s*[:=]\s*"?([^"}\n\r]+)"?/i);
+          payload = { query: match ? match[1].trim() : body.trim() };
+        }
+        const aiResult = resolveAiResponse(payload.query || payload.message || '');
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Access-Control-Allow-Origin': '*'
+        });
+        res.end(JSON.stringify({ success: true, result: aiResult }));
+      });
+      return;
+    }
+
+    // Endpoint de Estado
+    if (cleanUrl === '/api/status' || cleanUrl === '/api/health') {
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({
+        status: 'online',
+        ai_service: 'active',
+        platform: 'Puente Digital 2.0 (Servidor Node.js)'
+      }));
+      return;
+    }
+
     if (cleanUrl === '/' || cleanUrl === '') {
       cleanUrl = '/index.html';
     }
 
-    // Sanitize path to prevent directory traversal
     const safePath = path.normalize(cleanUrl).replace(/^(\.\.[\/\\])+/, '');
     const filePath = path.join(BASE_DIR, safePath);
 
@@ -60,10 +157,10 @@ function createServer(port) {
 
   server.listen(port, () => {
     console.log('====================================================');
-    console.log('  PUENTE DIGITAL - SERVIDOR LOCAL ACTIVO');
+    console.log('  PUENTE DIGITAL - SERVIDOR ACTIVO CON SOPORTE DE IA');
     console.log('====================================================');
-    console.log(`  URL local:   http://localhost:${port}`);
-    console.log(`  Directorio:  ${BASE_DIR}`);
+    console.log(`  URL local:    http://localhost:${port}`);
+    console.log(`  Endpoint IA:  http://localhost:${port}/api/ai/chat`);
     console.log('====================================================');
   });
 

@@ -677,11 +677,11 @@ const PUENTE_DATA = {
     },
     {
       id: "ach-ai-friend",
-      title: "Compañero Digital",
-      category: "Asistencia",
+      title: "Compañero con IA",
+      category: "Inteligencia Artificial",
       icon: "🤖",
-      description: "Consultaste a tu Compañero Digital y recibiste una respuesta empática con voz.",
-      unlockedNotice: "¡Qué bueno! Ahora sabes que siempre tienes a alguien para consultarle con paciencia."
+      description: "Consultaste a tu Compañero con Inteligencia Artificial y recibiste una respuesta empática con voz.",
+      unlockedNotice: "¡Felicitaciones! Conversaste con la Inteligencia Artificial y aprendiste un consejo nuevo."
     }
   ],
 

@@ -18,3 +18,12 @@ desktop.ini
 *.suo
 *.ntvs*
 *.njsproj
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+.venv/
+env/
+venv/
