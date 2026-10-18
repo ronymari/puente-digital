@@ -1,7 +1,7 @@
 /**
  * Puente Digital - Servicio de Inteligencia Artificial (AIService)
  * Trabajo Integrador Final
- * Autores: Calogerópulos Alexandro, Centurión Tomás Gabriel, Centurion Valeria Analia, Mari Rony Sebastián, Rodríguez Santiago Adrián
+ * Autores: MARI, Rony Sebastián; CENTURIÓN, Tomás Gabriel; RODRÍGUEZ, Santiago Adrián; CALOGERÓPULOS, Alexandro; CENTURIÓN, Valeria Analía
  * 
  * Gestiona la interacción con el modelo de Inteligencia Artificial (Backend API / Gemini)
  * y el reconocimiento/síntesis de voz para personas mayores.

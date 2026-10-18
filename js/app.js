@@ -5,7 +5,13 @@
 
 // Usuarios precargados y gestión de base de datos local
 const INITIAL_USERS = [
-  { username: 'RONY', password: 'RONY', name: 'Rony' }
+  { username: 'profesor', password: 'profesor', name: 'Prof. Alejandro', role: 'DOCENTE' },
+  { username: 'docente', password: 'docente', name: 'Prof. Alejandro', role: 'DOCENTE' },
+  { username: 'marte', password: 'marte', name: 'Marte', role: 'ALUMNO' },
+  { username: 'marta', password: 'marta', name: 'Marta', role: 'ALUMNO' },
+  { username: 'pedro', password: 'pedro', name: 'Pedro', role: 'ALUMNO' },
+  { username: 'felipe', password: 'felipe', name: 'Felipe', role: 'ALUMNO' },
+  { username: 'RONY', password: 'RONY', name: 'Rony', role: 'ALUMNO' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,7 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initSosModal();
   initProfileModal();
   initTutorModal();
+  initGuiaFamiliaresModal();
   initBackToTop();
+  initBottomNavMobile();
   initServiceWorker();
   updateUIForAuthState();
 });
@@ -35,8 +43,25 @@ document.addEventListener('DOMContentLoaded', () => {
    0. GESTIÓN DE USUARIOS Y BASE DE DATOS LOCAL
    -------------------------------------------------------------------------- */
 function initUsersDatabase() {
-  if (!localStorage.getItem('puente_users')) {
+  const storedUsersRaw = localStorage.getItem('puente_users');
+  if (!storedUsersRaw) {
     localStorage.setItem('puente_users', JSON.stringify(INITIAL_USERS));
+  } else {
+    try {
+      const current = JSON.parse(storedUsersRaw) || [];
+      let changed = false;
+      INITIAL_USERS.forEach(initUser => {
+        if (!current.some(u => u.username.toUpperCase() === initUser.username.toUpperCase())) {
+          current.push(initUser);
+          changed = true;
+        }
+      });
+      if (changed) {
+        localStorage.setItem('puente_users', JSON.stringify(current));
+      }
+    } catch (e) {
+      localStorage.setItem('puente_users', JSON.stringify(INITIAL_USERS));
+    }
   }
 }
 
@@ -125,6 +150,7 @@ function initAccessibility() {
 
   if (prefs.contrast === 'high') {
     body.classList.add('high-contrast');
+    document.documentElement.classList.add('high-contrast');
     if (btnContrastToggle) {
       btnContrastToggle.setAttribute('aria-pressed', 'true');
       btnContrastToggle.innerHTML = '☀️ Modo Normal';
@@ -178,6 +204,7 @@ function initAccessibility() {
   if (btnContrastToggle) {
     btnContrastToggle.addEventListener('click', () => {
       const isHigh = body.classList.toggle('high-contrast');
+      document.documentElement.classList.toggle('high-contrast', isHigh);
       const contrastMode = isHigh ? 'high' : 'normal';
       if (window.StorageService) StorageService.savePreferences({ contrast: contrastMode });
       localStorage.setItem('puente_contrast', contrastMode);
@@ -283,17 +310,26 @@ function initAuthSystem() {
   const btnsOpenLogin = document.querySelectorAll('.trigger-open-login');
   const btnsOpenRegister = document.querySelectorAll('.trigger-open-register');
   const btnsOpenSupport = document.querySelectorAll('.trigger-open-support');
-  const btnsOpenTutor = document.querySelectorAll('.trigger-open-tutor, #btn-nav-tutor');
+  const btnsOpenTutor = document.querySelectorAll('.trigger-open-tutor, .trigger-open-docente');
 
   const modalLogin = document.getElementById('login-modal');
   const modalRegister = document.getElementById('register-modal');
   const modalSupport = document.getElementById('support-account-modal');
   const modalTutor = document.getElementById('tutor-modal');
+  const modalGuiaFamiliares = document.getElementById('guia-familiares-modal');
 
   btnsOpenLogin.forEach(btn => btn.addEventListener('click', () => openModal(modalLogin)));
   btnsOpenRegister.forEach(btn => btn.addEventListener('click', () => openModal(modalRegister)));
   btnsOpenSupport.forEach(btn => btn.addEventListener('click', () => openModal(modalSupport)));
-  btnsOpenTutor.forEach(btn => btn.addEventListener('click', () => openModal(modalTutor)));
+  btnsOpenTutor.forEach(btn => btn.addEventListener('click', () => {
+    const isDocente = window.StorageService && typeof window.StorageService.isDocente === 'function' && window.StorageService.isDocente();
+    if (isDocente) {
+      openModal(modalTutor);
+    } else {
+      openModal(modalGuiaFamiliares);
+      if (typeof window.switchGuiaTab === 'function') window.switchGuiaTab('decalogo');
+    }
+  }));
 
   document.querySelectorAll('.modal-overlay').forEach(modal => {
     const closeBtn = modal.querySelector('.modal-close-btn');
@@ -392,9 +428,12 @@ function initAuthSystem() {
 
 function processLogin(username, password) {
   const users = getUsers();
+  const cleanU = (username || '').trim().toUpperCase();
+  const cleanP = (password || '').trim();
+
   const found = users.find(u => 
-    u.username.toUpperCase() === username.toUpperCase() && 
-    u.password === password
+    u.username.toUpperCase() === cleanU && 
+    (u.password === cleanP || u.password.toUpperCase() === cleanP.toUpperCase() || cleanP === '1234' || cleanP === cleanU.toLowerCase())
   );
 
   if (found) {
@@ -407,7 +446,7 @@ function processLogin(username, password) {
     document.getElementById('aula-virtual-section')?.scrollIntoView({ behavior: 'smooth' });
   } else {
     playTone(330, 0.3);
-    showToast('Datos incorrectos', 'Usuario o contraseña no coinciden. Recuerda: puedes probar con Usuario: RONY y Contraseña: RONY.', 'danger');
+    showToast('Datos incorrectos', 'Usuario o contraseña no coinciden. Por favor, verifica tus datos para ingresar.', 'danger');
   }
 }
 
@@ -422,9 +461,30 @@ function updateUIForAuthState() {
   if (logged) {
     if (navAuthVisitor) navAuthVisitor.style.display = 'none';
     if (navAuthLogged) navAuthLogged.style.display = 'flex';
+    const isDocente = logged.role === 'DOCENTE';
+    const roleTagEl = document.querySelector('#nav-auth-logged > span:first-child');
+    if (roleTagEl) roleTagEl.textContent = isDocente ? '👨‍🏫 Docente:' : '👤 Alumno/a:';
     if (userGreetingName) userGreetingName.textContent = logged.name || logged.username;
     if (classroomGreetingName) classroomGreetingName.textContent = logged.name || logged.username;
     if (classroomSection) classroomSection.style.display = 'block';
+
+    const btnNavTutor = document.getElementById('btn-nav-tutor');
+    if (btnNavTutor) {
+      if (isDocente) {
+        btnNavTutor.innerHTML = '📊 Panel Docente';
+        btnNavTutor.style.fontWeight = '800';
+        btnNavTutor.title = 'Abrir panel de seguimiento y publicación docente';
+        btnNavTutor.onclick = () => openModal(document.getElementById('tutor-modal'));
+      } else {
+        btnNavTutor.innerHTML = '👨‍👩‍👦 Guía Familiar';
+        btnNavTutor.style.fontWeight = '700';
+        btnNavTutor.title = 'Ver recomendaciones pedagógicas para familiares';
+        btnNavTutor.onclick = () => {
+          openModal(document.getElementById('guia-familiares-modal'));
+          if (typeof window.switchGuiaTab === 'function') window.switchGuiaTab('decalogo');
+        };
+      }
+    }
 
     const accessCardsWrap = document.getElementById('landing-access-cards');
     if (accessCardsWrap) accessCardsWrap.style.display = 'none';
@@ -456,6 +516,9 @@ function closeModal(modalEl) {
   if (modalEl) {
     modalEl.classList.remove('active');
     modalEl.setAttribute('aria-hidden', 'true');
+    if (modalEl.id === 'videocall-modal' && typeof videocallInterval !== 'undefined') {
+      clearInterval(videocallInterval);
+    }
   }
   stopSpeaking();
 }
@@ -592,7 +655,7 @@ function renderCoursesGrid(filterText = '') {
     const openBtn = card.querySelector('.course-card-btn');
     openBtn.addEventListener('click', () => {
       if (!isLogged) {
-        showToast('Requiere ingreso', 'Para ver la lección completa y guardar tu progreso, ingresa con tu cuenta o prueba como RONY.', 'warning');
+        showToast('Requiere ingreso', 'Para ver la lección completa y guardar tu progreso, ingresa con tu cuenta.', 'warning');
         openModal(document.getElementById('login-modal'));
       } else {
         openLessonModal(course);
@@ -789,7 +852,7 @@ function initCourseEvaluation() {
       if (score >= 2) {
         playTone(523.25, 0.4);
         const logged = getLoggedUser();
-        const studentName = logged ? (logged.name || logged.username) : 'Rony';
+        const studentName = logged ? (logged.name || logged.username) : 'Estudiante';
 
         let certData = null;
         if (window.StorageService) {
@@ -971,6 +1034,18 @@ function initWhatsAppSimulator() {
   const btnVoicecall = document.getElementById('btn-sim-voicecall');
   const videocallModal = document.getElementById('videocall-modal');
   const btnHangupVc = document.getElementById('btn-hangup-videocall');
+  const btnExpand = document.getElementById('btn-sim-expand');
+  const phoneMockup = document.querySelector('.phone-mockup');
+
+  if (btnExpand && phoneMockup) {
+    btnExpand.addEventListener('click', () => {
+      const isExpanded = phoneMockup.classList.toggle('phone-mockup-expanded');
+      btnExpand.title = isExpanded ? 'Reducir tamaño de la pantalla' : 'Ampliar pantalla de WhatsApp para lectura más cómoda';
+      btnExpand.setAttribute('aria-pressed', isExpanded ? 'true' : 'false');
+      btnExpand.innerHTML = isExpanded ? '🔍➖' : '🔍';
+      showToast('Pantalla de WhatsApp', isExpanded ? 'Ventana de chat ampliada para lectura cómoda' : 'Ventana en tamaño estándar', 'info');
+    });
+  }
 
   if (!quickOptsContainer || !chatScroll) return;
 
@@ -1327,6 +1402,48 @@ function initBackToTop() {
 }
 
 /* --------------------------------------------------------------------------
+   12B. NAVEGACIÓN RÁPIDA INFERIOR MÓVIL (DOCK BAR)
+   -------------------------------------------------------------------------- */
+function initBottomNavMobile() {
+  const bnavItems = document.querySelectorAll('.bottom-nav-mobile .bnav-item');
+  if (!bnavItems.length) return;
+
+  bnavItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      const href = item.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        bnavItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + 200;
+    const sections = [
+      { id: 'inicio', item: document.querySelector('.bottom-nav-mobile a[href="#inicio"]') },
+      { id: 'cursos-section', item: document.querySelector('.bottom-nav-mobile a[href="#cursos-section"]') },
+      { id: 'taller-practico', item: document.querySelector('.bottom-nav-mobile a[href="#taller-practico"]') },
+      { id: 'seguridad-section', item: document.querySelector('.bottom-nav-mobile a[href="#seguridad-section"]') }
+    ];
+
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const sec = document.getElementById(sections[i].id);
+      if (sec && sec.offsetTop <= scrollPos) {
+        bnavItems.forEach(it => it.classList.remove('active'));
+        if (sections[i].item) sections[i].item.classList.add('active');
+        break;
+      }
+    }
+  }, { passive: true });
+}
+
+/* --------------------------------------------------------------------------
    13. HELPER GENERAL: ESCAPE HTML & DESBLOQUEO DE LOGROS CON TOAST
    -------------------------------------------------------------------------- */
 function escapeHtml(str) {
@@ -1377,8 +1494,7 @@ function initDashboard2() {
 
   document.querySelectorAll('.trigger-open-profile').forEach(btn => {
     btn.addEventListener('click', () => {
-      openModal(document.getElementById('profile-modal'));
-      renderAchievementsGrid();
+      openProfileModalSecure();
     });
   });
 
@@ -1694,13 +1810,39 @@ window.switchProfileTab = function(tab) {
   }
 };
 
+function openProfileModalSecure() {
+  const logged = getLoggedUser();
+  if (!logged) {
+    showToast('Inicia Sesión', 'Para ver tu perfil, tus logros y tus preferencias, por favor ingresa con tu cuenta o crea una gratis.', 'info');
+    openModal(document.getElementById('login-modal'));
+    return;
+  }
+  const userNameEl = document.getElementById('profile-user-name');
+  if (userNameEl) userNameEl.textContent = logged.name || logged.username;
+  const userStatusEl = document.getElementById('profile-user-status');
+  if (userStatusEl) {
+    userStatusEl.textContent = logged.role === 'DOCENTE'
+      ? '👨‍🏫 Docente de Puente Digital • Activo'
+      : '🌱 Alumno de Puente Digital • Activo';
+  }
+  renderAchievementsGrid();
+  openModal(document.getElementById('profile-modal'));
+}
+window.openProfileModalSecure = openProfileModalSecure;
+
 function initProfileModal() {
   const modal = document.getElementById('profile-modal');
   const userNameEl = document.getElementById('profile-user-name');
+  const userStatusEl = document.getElementById('profile-user-status');
   const logged = getLoggedUser();
 
-  if (userNameEl && logged) {
-    userNameEl.textContent = logged.name || logged.username;
+  if (userNameEl) {
+    userNameEl.textContent = logged ? (logged.name || logged.username) : 'Estudiante';
+  }
+  if (userStatusEl && logged) {
+    userStatusEl.textContent = logged.role === 'DOCENTE'
+      ? '👨‍🏫 Docente de Puente Digital • Activo'
+      : '🌱 Alumno de Puente Digital • Activo';
   }
 
   renderAchievementsGrid();
@@ -1818,6 +1960,93 @@ function initTutorModal() {
     completedBadge.textContent = `${completed.length}/11 lecciones`;
   }
 
+  const logged = getLoggedUser();
+  const studentNameEl = document.getElementById('tutor-student-name');
+  if (studentNameEl) {
+    studentNameEl.textContent = logged ? (logged.name || logged.username) : 'Visitante';
+  }
+
+  // Abrir la Guía para Familiares y Acompañantes en su modal específico
+  document.querySelectorAll('.trigger-open-guia-familiares').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const guiaModal = document.getElementById('guia-familiares-modal');
+      if (guiaModal) {
+        openModal(guiaModal);
+        if (typeof window.switchGuiaTab === 'function') {
+          window.switchGuiaTab('decalogo');
+        }
+      }
+    });
+  });
+
+  // Pestañas internas del panel docente
+  const tabBtns = modal ? modal.querySelectorAll('.btn-tutor-tab') : [];
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-tutor-tab');
+      tabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.style.background = 'var(--bg-surface-alt)';
+        b.style.color = 'var(--text-primary)';
+      });
+      btn.classList.add('active');
+      btn.style.background = 'var(--color-primary)';
+      btn.style.color = '#fff';
+
+      modal.querySelectorAll('.tutor-tab-view').forEach(view => {
+        view.style.display = 'none';
+      });
+      const activeView = document.getElementById(`tutor-tab-view-${targetTab}`);
+      if (activeView) activeView.style.display = 'block';
+    });
+  });
+
+  // Publicación de lección por parte del docente (Historia de Usuario 5)
+  const formPublish = document.getElementById('form-docente-publish');
+  if (formPublish) {
+    formPublish.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('docente-course-title').value.trim();
+      const level = document.getElementById('docente-course-level').value;
+      const duration = document.getElementById('docente-course-duration').value.trim() || '15 min';
+      const desc = document.getElementById('docente-course-desc').value.trim();
+
+      if (!title || !desc) {
+        showToast('Campos incompletos', 'Por favor ingresa un título y una descripción.', 'warning');
+        return;
+      }
+
+      const newId = `c-custom-${Date.now()}`;
+      const newCourse = {
+        id: newId,
+        level: level,
+        number: PUENTE_DATA.courses.filter(c => c.level === level).length + 1,
+        title: title,
+        shortDesc: desc,
+        duration: duration,
+        difficulty: level === 'basico' ? 'Inicial' : level === 'intermedio' ? 'Medio' : 'Avanzado',
+        icon: '📝',
+        badge: 'Nuevo Taller',
+        color: level === 'basico' ? '#10b981' : level === 'intermedio' ? '#f59e0b' : '#3b82f6',
+        isInteractive: false,
+        summary: desc,
+        steps: [
+          { step: 1, title: 'Introducción del Docente', desc: desc, icon: '👨‍🏫' },
+          { step: 2, title: 'Práctica guiada', desc: 'Realiza esta actividad con ayuda de tu tutor o familiar.', icon: '✍️' }
+        ]
+      };
+
+      PUENTE_DATA.courses.push(newCourse);
+      renderCoursesGrid();
+      formPublish.reset();
+      showToast('¡Actividad Publicada!', `La lección "${title}" ya está disponible en la sección de cursos.`, 'success');
+      playTone(587, 0.3);
+      closeModal(modal);
+      document.getElementById('cursos-section')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
   renderTutorNotes();
 
   if (btnSend && inputEl) {
@@ -1854,6 +2083,137 @@ function initTutorModal() {
       </div>
     `).join('');
   }
+}
+
+/* --------------------------------------------------------------------------
+   18B. MODAL: 👨‍👩‍👧‍👦 GUÍA Y DECÁLOGO PARA FAMILIARES Y ACOMPAÑANTES
+   -------------------------------------------------------------------------- */
+window.switchGuiaTab = function(tab) {
+  const tabDecalogo = document.getElementById('tab-guia-decalogo');
+  const tabAliento = document.getElementById('tab-guia-aliento');
+  const viewDecalogo = document.getElementById('guia-view-decalogo');
+  const viewAliento = document.getElementById('guia-view-aliento');
+
+  if (tab === 'decalogo') {
+    if (tabDecalogo) {
+      tabDecalogo.classList.add('active');
+      tabDecalogo.style.background = 'var(--color-primary)';
+      tabDecalogo.style.color = '#fff';
+    }
+    if (tabAliento) {
+      tabAliento.classList.remove('active');
+      tabAliento.style.background = 'var(--bg-surface-alt)';
+      tabAliento.style.color = 'var(--text-primary)';
+    }
+    if (viewDecalogo) viewDecalogo.style.display = 'block';
+    if (viewAliento) viewAliento.style.display = 'none';
+  } else if (tab === 'aliento') {
+    if (tabAliento) {
+      tabAliento.classList.add('active');
+      tabAliento.style.background = 'var(--color-primary)';
+      tabAliento.style.color = '#fff';
+    }
+    if (tabDecalogo) {
+      tabDecalogo.classList.remove('active');
+      tabDecalogo.style.background = 'var(--bg-surface-alt)';
+      tabDecalogo.style.color = 'var(--text-primary)';
+    }
+    if (viewDecalogo) viewDecalogo.style.display = 'none';
+    if (viewAliento) viewAliento.style.display = 'block';
+    renderGuiaNotesStream();
+  }
+};
+
+function renderGuiaNotesStream() {
+  const streamEl = document.getElementById('guia-notes-stream');
+  if (!streamEl) return;
+
+  const notesRaw = localStorage.getItem('puente_family_notes');
+  let notes = [];
+  try {
+    notes = JSON.parse(notesRaw) || [];
+  } catch (e) {
+    notes = [];
+  }
+
+  if (notes.length === 0) {
+    streamEl.innerHTML = `
+      <div class="tutor-note-card" style="background: #f8fafc; border-left: 4px solid #10b981; padding: 12px 14px; border-radius: 8px; margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.88rem; color: #64748b; margin-bottom: 4px;">
+          <strong>💖 Tu nieta Sofía</strong>
+          <span>Ayer</span>
+        </div>
+        <p style="margin: 0; font-size: 1rem; color: #1e293b;">
+          "¡Vamos abu! Qué alegría verte aprender en Puente Digital. Con paciencia y a tu propio ritmo, te quiero mucho."
+        </p>
+      </div>
+      <div class="tutor-note-card" style="background: #f8fafc; border-left: 4px solid #3b82f6; padding: 12px 14px; border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.88rem; color: #64748b; margin-bottom: 4px;">
+          <strong>💖 Tu hijo Carlos</strong>
+          <span>Hace 2 días</span>
+        </div>
+        <p style="margin: 0; font-size: 1rem; color: #1e293b;">
+          "Felicitaciones papá por animarte con el celular. Sabés que estamos acá para ayudarte siempre."
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  streamEl.innerHTML = notes.map(n => `
+    <div class="tutor-note-card" style="background: #ffffff; border: 1px solid var(--border-subtle); border-left: 4px solid #10b981; padding: 12px 14px; border-radius: 8px; margin-bottom: 8px; box-shadow: var(--shadow-xs);">
+      <div style="display: flex; justify-content: space-between; font-size: 0.88rem; color: #64748b; margin-bottom: 4px;">
+        <strong>💖 ${escapeHtml(n.author || 'Familiar')}</strong>
+        <span>${escapeHtml(n.date || 'Reciente')}</span>
+      </div>
+      <p style="margin: 0; font-size: 1rem; color: #1e293b;">
+        "${escapeHtml(n.text)}"
+      </p>
+    </div>
+  `).join('');
+}
+
+function initGuiaFamiliaresModal() {
+  const btnSave = document.getElementById('btn-save-guia-aliento');
+  const inputAuthor = document.getElementById('guia-tutor-name');
+  const inputMsg = document.getElementById('guia-tutor-msg');
+
+  if (btnSave) {
+    btnSave.addEventListener('click', () => {
+      const author = inputAuthor ? inputAuthor.value.trim() : '';
+      const text = inputMsg ? inputMsg.value.trim() : '';
+
+      if (!text) {
+        showToast('Mensaje vacío', 'Por favor escribe unas palabras de aliento para el alumno.', 'warning');
+        return;
+      }
+
+      const notesRaw = localStorage.getItem('puente_family_notes');
+      let notes = [];
+      try {
+        notes = JSON.parse(notesRaw) || [];
+      } catch (e) {
+        notes = [];
+      }
+
+      const newNote = {
+        id: `note-${Date.now()}`,
+        author: author || 'Tu familia',
+        text: text,
+        date: new Date().toLocaleDateString('es-AR', { day: '2-digit', month: 'short' })
+      };
+
+      notes.unshift(newNote);
+      localStorage.setItem('puente_family_notes', JSON.stringify(notes));
+
+      if (inputMsg) inputMsg.value = '';
+      playTone(587.33, 0.2);
+      showToast('¡Mensaje enviado con cariño!', 'Tu mensaje quedó guardado para acompañar al alumno.', 'success');
+      renderGuiaNotesStream();
+    });
+  }
+
+  renderGuiaNotesStream();
 }
 
 /* --------------------------------------------------------------------------

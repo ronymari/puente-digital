@@ -2,11 +2,11 @@
 
 > **Trabajo Integrador Final**  
 > **Integrantes del Equipo:**
-> - Calogerópulos Alexandro
-> - Centurión Tomás Gabriel
-> - Centurion Valeria Analia
-> - Mari Rony Sebastián
-> - Rodríguez Santiago Adrián
+> - MARI, Rony Sebastián
+> - CENTURIÓN, Tomás Gabriel
+> - RODRÍGUEZ, Santiago Adrián
+> - CALOGERÓPULOS, Alexandro
+> - CENTURIÓN, Valeria Analía
 
 ---
 
@@ -18,10 +18,10 @@ La plataforma se estructura en:
 1. **Identidad de Marca y Logo Oficial**: Isotipo de puente arquitectónico y nodos de conexión tecnológica con tipografía gerontológica accesible.
 2. **Página Principal de Bienvenida**: Espacio cálido que recibe al visitante, transmite tranquilidad (*"Tocar la pantalla no rompe nada y todo tiene marcha atrás"*), exhibe métricas de impacto (+1.200 alumnos, 3 niveles, 100% gratuito, soporte humano) y ofrece tres vías de acceso sencillas.
 3. **Sistema de Acceso para Adultos Mayores**:
-   - 🔑 **Iniciar Sesión**: Acceso con el usuario de prueba predeterminado:
-     - **Usuario:** `RONY`
-     - **Contraseña:** `RONY`
-     - *(Incluye un botón de acceso rápido de 1 clic para entrar sin teclear).*
+   - 🔑 **Iniciar Sesión**: Cuentas de alumnos precargadas para evaluación:
+     - **Usuario:** `marte` | **Contraseña:** `marte`
+     - **Usuario:** `pedro` | **Contraseña:** `pedro`
+     - **Usuario:** `felipe` | **Contraseña:** `felipe`
    - 📝 **Registrarme**: Formulario simple y accesible (nombre, usuario y contraseña fácil).
    - 📞 **Pedir a Soporte que cree mi cuenta**: Opciones de llamada gratuita al 0800 y WhatsApp para que un tutor cree la cuenta del alumno.
 4. **Aula Virtual y Curso Estrella Desarrollado en Profundidad**:
@@ -88,7 +88,12 @@ PUENTE DIGITAL/
 1. Haz doble clic en el archivo `index.html`.
 2. Se abrirá de inmediato en tu navegador preferido (Chrome, Edge, Firefox, etc.).
 
-### 🔑 Prueba Rápida con Usuario de Evaluación
+### 🔑 Cuentas de Acceso para Evaluación
 - Presiona **"Ingresar"** en la barra superior o en la portada.
-- Presiona el botón verde **"⚡ Probar acceso rápido como RONY (1 clic)"** (Usuario: `RONY`, Contraseña: `RONY`).
+- **Perfil Docente / Capacitador (Seguimiento grupal y publicación de lecciones):**
+  - **Usuario:** `profesor` | **Contraseña:** `profesor`
+- **Perfil Alumnos Mayores (Aprendizaje y simuladores):**
+  - **Usuario:** `marte` | **Contraseña:** `marte`
+  - **Usuario:** `pedro` | **Contraseña:** `pedro`
+  - **Usuario:** `felipe` | **Contraseña:** `felipe`
 - ¡Listo! Podrás recorrer los cursos, practicar en los simuladores interactivos de Play Store y WhatsApp, consultar a tu Compañero Digital y obtener tu Certificado de Logro.

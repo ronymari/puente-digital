@@ -4,11 +4,11 @@ PUENTE DIGITAL - SERVIDOR BACKEND (PYTHON 3 + SQLITE + API REST + IA)
 =============================================================================
 Trabajo Integrador Final
 Equipo:
-  - Calogerópulos Alexandro
-  - Centurión Tomás Gabriel
-  - Centurion Valeria Analia
-  - Mari Rony Sebastián
-  - Rodríguez Santiago Adrián
+  - MARI, Rony Sebastián
+  - CENTURIÓN, Tomás Gabriel
+  - RODRÍGUEZ, Santiago Adrián
+  - CALOGERÓPULOS, Alexandro
+  - CENTURIÓN, Valeria Analía
 
 Módulos incluidos:
   - Servidor HTTP multi-hilo para despachar la aplicación web.
@@ -69,12 +69,22 @@ def init_database():
         )
     """)
 
-    cursor.execute("SELECT id FROM users WHERE username = 'RONY'")
-    if not cursor.fetchone():
-        cursor.execute(
-            "INSERT INTO users (username, password, name, role) VALUES (?, ?, ?, ?)",
-            ("RONY", "RONY", "Rony", "ALUMNO")
-        )
+    seed_users = [
+        ("profesor", "profesor", "Prof. Alejandro", "DOCENTE"),
+        ("docente", "docente", "Prof. Alejandro", "DOCENTE"),
+        ("marte", "marte", "Marte", "ALUMNO"),
+        ("marta", "marta", "Marta", "ALUMNO"),
+        ("pedro", "pedro", "Pedro", "ALUMNO"),
+        ("felipe", "felipe", "Felipe", "ALUMNO"),
+        ("RONY", "RONY", "Rony", "ALUMNO")
+    ]
+    for u, p, n, r in seed_users:
+        cursor.execute("SELECT id FROM users WHERE UPPER(username) = ?", (u.upper(),))
+        if not cursor.fetchone():
+            cursor.execute(
+                "INSERT INTO users (username, password, name, role) VALUES (?, ?, ?, ?)",
+                (u, p, n, r)
+            )
 
     conn.commit()
     conn.close()
@@ -297,6 +307,12 @@ class PuenteDigitalRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        super().end_headers()
 
     def _send_json(self, status_code: int, data: dict):
         response_bytes = json.dumps(data, ensure_ascii=False).encode("utf-8")

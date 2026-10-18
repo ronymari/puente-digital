@@ -3,7 +3,7 @@
  * Permite el uso offline de cursos, lecciones y simuladores sin conexión a Internet.
  */
 
-const CACHE_NAME = 'puente-digital-v2-cache';
+const CACHE_NAME = 'puente-digital-v5-cache';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -15,7 +15,12 @@ const STATIC_ASSETS = [
   './js/app.js',
   './assets/favicon.svg',
   './assets/logo-puente-digital.svg',
-  './assets/hero-seniors.jpg'
+  './assets/hero-seniors.jpg',
+  './assets/team-rony-nueva.jpg',
+  './assets/team-tomas.jpg',
+  './assets/team-adrian-nueva.jpg',
+  './assets/team-alexandro.jpg',
+  './assets/team-valeria.jpg'
 ];
 
 // Instalación y pre-cacheo

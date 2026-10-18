@@ -15,6 +15,12 @@ const StorageService = (() => {
   };
 
   const DEFAULT_USERS = [
+    { username: 'profesor', password: 'profesor', name: 'Prof. Alejandro', role: 'DOCENTE', joinedDate: '2026-03-01' },
+    { username: 'docente', password: 'docente', name: 'Prof. Alejandro', role: 'DOCENTE', joinedDate: '2026-03-01' },
+    { username: 'marte', password: 'marte', name: 'Marte', role: 'ALUMNO', joinedDate: '2026-03-01' },
+    { username: 'marta', password: 'marta', name: 'Marta', role: 'ALUMNO', joinedDate: '2026-03-01' },
+    { username: 'pedro', password: 'pedro', name: 'Pedro', role: 'ALUMNO', joinedDate: '2026-03-01' },
+    { username: 'felipe', password: 'felipe', name: 'Felipe', role: 'ALUMNO', joinedDate: '2026-03-01' },
     { username: 'RONY', password: 'RONY', name: 'Rony', role: 'ALUMNO', joinedDate: '2026-03-01' }
   ];
 
@@ -30,11 +36,27 @@ const StorageService = (() => {
   // Inicialización segura
   function init() {
     try {
-      if (!localStorage.getItem(KEYS.USERS)) {
+      const storedUsersRaw = localStorage.getItem(KEYS.USERS);
+      if (!storedUsersRaw) {
         localStorage.setItem(KEYS.USERS, JSON.stringify(DEFAULT_USERS));
+      } else {
+        try {
+          const current = JSON.parse(storedUsersRaw) || [];
+          let changed = false;
+          DEFAULT_USERS.forEach(defUser => {
+            if (!current.some(u => u.username.toUpperCase() === defUser.username.toUpperCase())) {
+              current.push(defUser);
+              changed = true;
+            }
+          });
+          if (changed) {
+            localStorage.setItem(KEYS.USERS, JSON.stringify(current));
+          }
+        } catch (e) {
+          localStorage.setItem(KEYS.USERS, JSON.stringify(DEFAULT_USERS));
+        }
       }
       if (!localStorage.getItem(KEYS.COMPLETED_COURSES)) {
-        // Marcamos por defecto el curso 1 como realizado para que RONY tenga progreso visible
         localStorage.setItem(KEYS.COMPLETED_COURSES, JSON.stringify(['c1-app-install']));
       }
       if (!localStorage.getItem(KEYS.ACHIEVEMENTS)) {
@@ -82,11 +104,9 @@ const StorageService = (() => {
   function getLoggedUser() {
     try {
       const user = JSON.parse(localStorage.getItem(KEYS.LOGGED_USER));
-      if (user) return user;
-      // Si no hay ninguno, retornar por defecto al usuario RONY para facilitar la evaluación
-      return DEFAULT_USERS[0];
+      return user || null;
     } catch (e) {
-      return DEFAULT_USERS[0];
+      return null;
     }
   }
 
@@ -178,7 +198,7 @@ const StorageService = (() => {
     const id = certData.id || `PD-${Date.now().toString(36).toUpperCase()}`;
     const newCert = {
       id,
-      studentName: certData.studentName || 'Rony',
+      studentName: certData.studentName || 'Estudiante',
       courseTitle: certData.courseTitle || 'Descarga e Instalación Segura de Aplicaciones',
       issuedDate: new Date().toISOString(),
       score: certData.score || 3,

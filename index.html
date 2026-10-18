@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Puente Digital 2.0 - 'No estás solo. Aprendemos juntos.' Plataforma de autonomía e inclusión digital para personas mayores. Cursos accesibles, simuladores interactivos, compañero digital con voz y detector de estafas.">
   <meta name="theme-color" content="#007ce8">
-  <meta name="author" content="Calogerópulos Alexandro, Centurión Tomás Gabriel, Centurion Valeria Analia, Mari Rony Sebastián, Rodríguez Santiago Adrián">
+  <meta name="author" content="MARI, Rony Sebastián; CENTURIÓN, Tomás Gabriel; RODRÍGUEZ, Santiago Adrián; CALOGERÓPULOS, Alexandro; CENTURIÓN, Valeria Analía">
   <title>Puente Digital 2.0 | "No estás solo. Aprendemos juntos."</title>
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,10 +30,10 @@
       
       <!-- Controles de tamaño de letra -->
       <div class="accessibility-group" role="group" aria-label="Ajustar tamaño de la letra">
-        <span class="accessibility-label">🔍 Tamaño de letra:</span>
-        <button id="btn-font-normal" class="acc-btn active" title="Tamaño de letra normal">A (Normal)</button>
-        <button id="btn-font-large" class="acc-btn" title="Tamaño de letra grande">A+ (Grande)</button>
-        <button id="btn-font-xlarge" class="acc-btn" title="Tamaño de letra muy grande">A++ (Muy Grande)</button>
+        <span class="accessibility-label">🔍 Letra:</span>
+        <button id="btn-font-normal" class="acc-btn active" title="Tamaño de letra normal">A</button>
+        <button id="btn-font-large" class="acc-btn" title="Tamaño de letra grande">A+</button>
+        <button id="btn-font-xlarge" class="acc-btn" title="Tamaño de letra muy grande">A++</button>
       </div>
 
       <!-- Controles de Modo Visual, Voz y Emergencia -->
@@ -43,7 +43,7 @@
         </button>
 
         <button id="btn-read-page" class="acc-btn" title="Escuchar el resumen de la página en voz alta">
-          🔊 Escuchar Página
+          🔊 Escuchar
         </button>
 
         <button id="btn-voice-speed" class="acc-btn" title="Cambiar la velocidad de la voz">
@@ -51,7 +51,7 @@
         </button>
 
         <button id="btn-top-companion" class="acc-btn acc-btn-ai" title="Abrir mi Compañero Digital con Inteligencia Artificial y voz">
-          🤖 Compañero con IA
+          🤖 Compañero IA
         </button>
 
         <button id="btn-help-top" class="acc-btn" title="Preguntas frecuentes y ayuda rápida de uso">
@@ -59,7 +59,7 @@
         </button>
 
         <button id="btn-top-sos" class="acc-btn acc-btn-urgent" title="¿Tenés una urgencia digital? Tocá acá">
-          🆘 Necesito Ayuda
+          🆘 Emergencia
         </button>
       </div>
 
@@ -104,12 +104,12 @@
         <!-- Estado de Usuario Autenticado 2.0 -->
         <div class="user-logged-badge" id="nav-auth-logged">
           <span>👤 Alumno/a:</span>
-          <span class="user-logged-name" id="user-greeting-name">Rony</span>
+          <span class="user-logged-name" id="user-greeting-name">Estudiante</span>
           <button class="btn-nav-profile trigger-open-profile" id="btn-nav-profile" title="Ver mi perfil y logros">
             🏅 Mi Perfil
           </button>
-          <button class="btn-nav-tutor trigger-open-tutor" id="btn-nav-tutor" title="Ver notas de acompañante y familia">
-            👨‍🏫 Familia/Docente
+          <button class="btn-nav-tutor" id="btn-nav-tutor" title="Ver guía pedagógica para familiares">
+            👨‍👩‍👦 Guía Familiar
           </button>
           <button class="btn-nav-logout" id="btn-nav-logout" title="Salir de mi cuenta">
             🚪 Salir
@@ -169,7 +169,7 @@
               <div class="hero-floating-pill pill-top" aria-hidden="true">
                 <span>⭐</span> +1.200 Alumnos Mayores
               </div>
-              <img src="assets/hero-seniors.jpg" alt="Puente Digital - Dos personas mayores sonrientes aprendiendo juntas con una tablet. No estás solo. Aprendemos juntos." class="hero-brand-illustration" loading="eager">
+              <img src="assets/hero-seniors.jpg" alt="Taller de Celulares y Tablets de Puente Digital - Adultos mayores aprendiendo juntos con entusiasmo. No estás solo. Aprendemos juntos." class="hero-brand-illustration" loading="eager">
               <div class="hero-floating-pill pill-bottom" aria-hidden="true">
                 <span>🛡️</span> 100% Gratuito y Seguro
               </div>
@@ -218,7 +218,7 @@
         <!-- LLAMADO A LA ACCIÓN: 3 CAMINOS DE ACCESO CLAROS -->
         <div class="access-cards-grid" id="landing-access-cards">
           
-          <!-- TARJETA 1: YA TENGO CUENTA (RONY) -->
+          <!-- TARJETA 1: YA TENGO CUENTA -->
           <div class="access-card access-card-login">
             <div>
               <div class="access-card-header">
@@ -226,11 +226,11 @@
                 <h3 class="access-card-title">Ya tengo mi cuenta</h3>
               </div>
               <p class="access-card-desc">
-                Si ya tienes tu cuenta creada o deseas evaluar la plataforma con el usuario de prueba <strong>RONY</strong>, ingresa aquí.
+                Si ya tienes tu cuenta creada, ingresa aquí con tu usuario y contraseña para continuar con tus clases.
               </p>
             </div>
             <button class="btn-primary trigger-open-login" style="width: 100%;">
-              <span>➡️</span> Entrar a mis Cursos (RONY)
+              <span>➡️</span> Entrar a mis Cursos
             </button>
           </div>
 
@@ -285,7 +285,7 @@
               <span class="level-indicator-pill" id="dashboard-user-level">🌱 Nivel 1 • En camino</span>
             </div>
             <h2 id="classroom-heading" class="classroom-greeting">
-              👋 ¡Hola, <span id="classroom-greeting-name">Rony</span>!
+              👋 ¡Hola, <span id="classroom-greeting-name">Estudiante</span>!
             </h2>
             <p class="dashboard-reassurance-quote">
               <em>"No estás solo. Aprendemos juntos. Tocar la pantalla no rompe nada y todo tiene marcha atrás. Vamos a tu propio ritmo."</em>
@@ -453,15 +453,8 @@
     <!-- ==================================================================
          SECCIÓN DE LOS 3 NIVELES DE APRENDIZAJE
          ================================================================== -->
-    <section id="cursos-section" class="levels-section" aria-labelledby="levels-heading">
+    <section id="cursos-section" class="levels-section" aria-label="Niveles de Aprendizaje">
       <div class="container">
-        
-        <header class="section-header">
-          <h2 id="levels-heading">Nuestros 3 Niveles de Aprendizaje</h2>
-          <p class="section-subtitle">
-            Elige el nivel que mejor se adapte a tus conocimientos actuales. Si eres visitante, puedes iniciar sesión con <strong>Usuario: RONY</strong> y <strong>Contraseña: RONY</strong> para acceder a todo.
-          </p>
-        </header>
 
         <!-- Selector de Pestañas de Niveles -->
         <div class="levels-tabs" id="level-tabs-container" role="tablist" aria-label="Niveles de dificultad">
@@ -510,7 +503,7 @@
 
         <div class="practice-container-box">
           
-          <div class="practice-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; align-items: start;">
+          <div class="practice-grid">
             
             <!-- SIMULADOR 1: DETECTOR DE ESTAFAS 2.0 -->
             <div class="scam-detector-wrap" id="view-scam-detector">
@@ -597,6 +590,9 @@
                       <div class="phone-status">🟢 En línea</div>
                     </div>
                     <div class="phone-header-actions">
+                      <button class="btn-phone-action" id="btn-sim-expand" title="Ampliar pantalla de WhatsApp para lectura más cómoda" aria-label="Ampliar o reducir tamaño de WhatsApp">
+                        🔍
+                      </button>
                       <button class="btn-phone-action" id="btn-sim-videocall" title="Hacer una videollamada de prueba">
                         📹
                       </button>
@@ -634,7 +630,7 @@
                       type="text" 
                       id="chat-input-field" 
                       class="chat-input" 
-                      placeholder="Escribí tu mensaje aquí..."
+                      placeholder="Mensaje..."
                       aria-label="Escribir mensaje de respuesta"
                     >
                     <button class="chat-mic-btn" id="btn-sim-record-audio" title="Grabar y mandar un audio de voz">
@@ -652,6 +648,7 @@
 
         </div>
 
+      </div>
       </div>
     </section>
 
@@ -816,33 +813,43 @@
           <div class="team-grid">
             
             <div class="team-card">
-              <div class="team-avatar">👨‍🎓</div>
-              <div class="team-name">Calogerópulos Alexandro</div>
-              <div class="team-role">Investigación & Contenidos</div>
+              <div class="team-avatar-wrap">
+                <img src="assets/team-rony-nueva.jpg?v=2026" alt="MARI, Rony Sebastián" class="team-avatar-img">
+              </div>
+              <div class="team-name">MARI, Rony Sebastián</div>
+              <div class="team-role">Desarrollador Backend y Base de Datos</div>
             </div>
 
             <div class="team-card">
-              <div class="team-avatar">👨‍🎓</div>
-              <div class="team-name">Centurión Tomás Gabriel</div>
-              <div class="team-role">Diseño & Experiencia de Usuario</div>
+              <div class="team-avatar-wrap">
+                <img src="assets/team-tomas.jpg?v=2026" alt="CENTURIÓN, Tomás Gabriel" class="team-avatar-img">
+              </div>
+              <div class="team-name">CENTURIÓN, Tomás Gabriel</div>
+              <div class="team-role">Analista de Requisitos y Diseñador UX/UI</div>
             </div>
 
             <div class="team-card">
-              <div class="team-avatar">👩‍🎓</div>
-              <div class="team-name">Centurion Valeria Analia</div>
-              <div class="team-role">Pedagogía & Accesibilidad</div>
+              <div class="team-avatar-wrap">
+                <img src="assets/team-adrian-nueva.jpg?v=2026" alt="RODRÍGUEZ, Santiago Adrián" class="team-avatar-img">
+              </div>
+              <div class="team-name">RODRÍGUEZ, Santiago Adrián</div>
+              <div class="team-role">Desarrollador Frontend y Maquetación</div>
             </div>
 
             <div class="team-card">
-              <div class="team-avatar">👨‍💻</div>
-              <div class="team-name">Mari Rony Sebastián</div>
-              <div class="team-role">Desarrollo & Arquitectura Web</div>
+              <div class="team-avatar-wrap">
+                <img src="assets/team-alexandro.jpg?v=2026" alt="CALOGERÓPULOS, Alexandro" class="team-avatar-img">
+              </div>
+              <div class="team-name">CALOGERÓPULOS, Alexandro</div>
+              <div class="team-role">Product Owner / Líder de Proyecto</div>
             </div>
 
             <div class="team-card">
-              <div class="team-avatar">👨‍🎓</div>
-              <div class="team-name">Rodríguez Santiago Adrián</div>
-              <div class="team-role">Pruebas & Seguridad Digital</div>
+              <div class="team-avatar-wrap">
+                <img src="assets/team-valeria.jpg?v=2026" alt="CENTURIÓN, Valeria Analía" class="team-avatar-img">
+              </div>
+              <div class="team-name">CENTURIÓN, Valeria Analía</div>
+              <div class="team-role">QA Tester y Responsable de Documentación</div>
             </div>
 
           </div>
@@ -881,6 +888,7 @@
             <li><a href="#taller-practico">🛠️ Simuladores de Práctica</a></li>
             <li><a href="#seguridad-section">🛡️ 4 Consejos de Seguridad</a></li>
             <li><a href="#sobre-el-proyecto">👥 Integrantes del Proyecto</a></li>
+            <li><a href="javascript:void(0)" class="trigger-open-guia-familiares" style="color: #007ce8; font-weight: 700;">👨‍👩‍👦 Guía para Familiares y Acompañantes</a></li>
           </ul>
         </div>
 
@@ -926,24 +934,11 @@
         Coloca tu usuario y contraseña para ingresar a tus cursos y guardar tu avance.
       </p>
 
-      <!-- AVISO DE USUARIO PRE-REGISTRADO PARA EVALUACIÓN -->
-      <div class="login-preset-notice">
-        <div style="font-size: 1.05rem; font-weight: 700; color: var(--color-primary);">
-          ⚡ Acceso Rápido de Prueba (Evaluación del Trabajo):
-        </div>
-        <div style="font-size: 1rem;">
-          Usuario: <strong>RONY</strong> | Contraseña: <strong>RONY</strong>
-        </div>
-        <button type="button" class="btn-quick-fill" id="btn-quick-rony">
-          ⚡ Probar como RONY (1 clic directo)
-        </button>
-      </div>
-
       <form id="form-login">
         <div class="form-group">
           <label for="login-username" class="form-label">Tu Usuario:</label>
           <div class="form-input-wrap">
-            <input type="text" id="login-username" class="form-input" placeholder="Ejemplo: RONY" required autocomplete="username">
+            <input type="text" id="login-username" class="form-input" placeholder="Ingresa tu usuario" required autocomplete="username">
           </div>
         </div>
 
@@ -1186,7 +1181,7 @@
         <p style="font-size: 1.1rem; color: #78350f; margin-bottom: 6px;">
           Se certifica con orgullo que el/la alumno/a:
         </p>
-        <div class="cert-recipient" id="cert-student-name">Rony</div>
+        <div class="cert-recipient" id="cert-student-name">Estudiante</div>
         <p style="font-size: 1.15rem; line-height: 1.6; color: #1e293b; max-width: 540px; margin: 0 auto 15px auto;">
           Ha completado satisfactoriamente el curso y las evaluaciones prácticas de <strong>"Descarga e Instalación Segura de Aplicaciones Móviles"</strong> demostrando solvencia y autonomía en el ecosistema digital.
         </p>
@@ -1199,12 +1194,12 @@
         <div class="cert-signatures">
           <div class="cert-signature-item">
             <div class="cert-sign-line"></div>
-            <div>Calogerópulos • Centurión • Centurion</div>
-            <div style="font-size: 0.8rem;">Equipo Pedagógico</div>
+            <div>CALOGERÓPULOS • CENTURIÓN • CENTURIÓN</div>
+            <div style="font-size: 0.8rem;">Equipo Pedagógico y Diseño UX</div>
           </div>
           <div class="cert-signature-item">
             <div class="cert-sign-line"></div>
-            <div>Mari Rony • Rodríguez Santiago</div>
+            <div>MARI • RODRÍGUEZ</div>
             <div style="font-size: 0.8rem;">Equipo de Desarrollo y Seguridad</div>
           </div>
         </div>
@@ -1455,7 +1450,7 @@
         <div class="profile-avatar">👵👴</div>
         <div>
           <h2 id="profile-modal-title" style="font-size: 1.6rem; margin-bottom: 2px;">
-            Perfil de <span id="profile-user-name">Rony</span>
+            Perfil de <span id="profile-user-name">Estudiante</span>
           </h2>
           <div style="font-size: 1rem; color: var(--text-secondary);" id="profile-user-status">
             🌱 Alumno de Puente Digital • Activo
@@ -1525,49 +1520,347 @@
        13. MODAL 2.0: 👨‍🏫 VISTA ACOMPAÑANTE / PANEL DOCENTE
        ====================================================================== -->
   <div id="tutor-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="tutor-modal-title" aria-hidden="true">
-    <div class="modal-content" style="max-width: 680px;">
+    <div class="modal-content" style="max-width: 760px;">
       <button class="modal-close-btn" aria-label="Cerrar panel docente">✕</button>
 
-      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px;">
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
         <span style="font-size: 38px;" aria-hidden="true">👨‍🏫</span>
         <div>
           <h2 id="tutor-modal-title" style="font-size: 1.6rem; color: var(--color-primary); margin-bottom: 2px;">
-            Espacio Familiar & Acompañante
+            Panel Docente & Espacio de Acompañamiento
           </h2>
           <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 0;">
-            Pensado para nietos, hijos, centros de jubilados y profesores que acompañan el aprendizaje.
+            Seguimiento de talleres en centros de jubilados, publicación de actividades y guía pedagógica.
           </p>
         </div>
       </div>
 
-      <div class="tutor-stats-card">
-        <h4 style="font-size: 1.15rem; margin-bottom: 6px;">Progreso de tu Alumno/Familiar:</h4>
-        <p style="font-size: 1.05rem; margin-bottom: 8px;">
-          <strong>Alumno:</strong> Rony • <strong>Lecciones Completadas:</strong> <span id="tutor-completed-badge">1/11</span>
-        </p>
-        <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0;">
-          💡 Recomendación: Reforzar la práctica de videollamadas para que pueda llamarte los fines de semana.
-        </p>
-      </div>
-
-      <!-- Dejar una nota de aliento -->
-      <div style="background: var(--bg-surface-alt); border: 2px solid var(--border-strong); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
-        <h4 style="font-size: 1.15rem; margin-bottom: 8px;">💌 Dejale un mensaje de aliento:</h4>
-        <textarea 
-          id="tutor-new-note" 
-          class="form-input" 
-          rows="2" 
-          placeholder="Ejemplo: ¡Genial abu! Estoy muy orgullosa de cómo aprendés a usar WhatsApp..."
-        ></textarea>
-        <button class="btn-action-green" id="btn-send-tutor-note" style="margin-top: 10px; font-size: 1rem; min-height: 44px;">
-          <span>📨</span> Guardar Mensaje para el Alumno
+      <!-- Selector de pestañas del panel docente -->
+      <div class="tutor-tabs-wrap" style="display: flex; gap: 8px; margin-bottom: 18px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 8px; flex-wrap: wrap;">
+        <button type="button" class="btn-tutor-tab active" data-tutor-tab="seguimiento" style="background: var(--color-primary); color: #fff; border: none; border-radius: 20px; padding: 6px 14px; font-weight: 700; cursor: pointer;">
+          📊 Seguimiento Grupal
+        </button>
+        <button type="button" class="btn-tutor-tab" data-tutor-tab="publicar" style="background: var(--bg-surface-alt); color: var(--text-primary); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 6px 14px; font-weight: 700; cursor: pointer;">
+          ➕ Publicar Lección
+        </button>
+        <button type="button" class="btn-tutor-tab" data-tutor-tab="guia" style="background: var(--bg-surface-alt); color: var(--text-primary); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 6px 14px; font-weight: 700; cursor: pointer;">
+          📖 Guía Pedagógica
+        </button>
+        <button type="button" class="btn-tutor-tab" data-tutor-tab="aliento" style="background: var(--bg-surface-alt); color: var(--text-primary); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 6px 14px; font-weight: 700; cursor: pointer;">
+          💌 Mensajes de Aliento
         </button>
       </div>
 
-      <!-- Notas Recientes -->
-      <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Mensajes de tu Familia y Tutores:</h4>
-      <div id="tutor-notes-stream" class="tutor-notes-stream">
-        <!-- Insertado por app.js -->
+      <!-- VISTA 1: SEGUIMIENTO GRUPAL -->
+      <div id="tutor-tab-view-seguimiento" class="tutor-tab-view">
+        <div class="tutor-stats-card" style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+            <h4 style="font-size: 1.15rem; margin: 0; color: #0b2545;">🏫 Centro de Jubilados "Los Abuelos Felices" & Taller Municipal</h4>
+            <span style="background: #e0f2fe; color: #0284c7; padding: 4px 10px; border-radius: 12px; font-weight: 800; font-size: 0.88rem;">48 Alumnos Activos</span>
+          </div>
+          <p style="font-size: 1.05rem; margin-bottom: 10px;">
+            <strong>Avance Promedio Grupal:</strong> <span style="color: var(--color-success); font-weight: 800;">68% completado</span>
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.95rem; margin-bottom: 12px;">
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px; border-radius: 8px;">
+              <strong style="color: #166534;">✅ Mayor Dominio:</strong>
+              <div style="color: #15803d; margin-top: 4px;">WhatsApp, Google y Detector de Estafas</div>
+            </div>
+            <div style="background: #fffbeb; border: 1px solid #fef3c7; padding: 10px; border-radius: 8px;">
+              <strong style="color: #92400e;">⚠️ Mayor Dificultad:</strong>
+              <div style="color: #b45309; margin-top: 4px;">Turnos PAMI en línea y Descarga de Apps</div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size: 1.15rem; margin-bottom: 8px;">📋 Estado Reciente de los Participantes:</h4>
+        <div style="overflow-x: auto; margin-bottom: 14px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left;">
+            <thead>
+              <tr style="background: var(--bg-surface-alt); border-bottom: 2px solid var(--border-subtle);">
+                <th style="padding: 8px 10px;">Alumno</th>
+                <th style="padding: 8px 10px;">Nivel</th>
+                <th style="padding: 8px 10px;">Completadas</th>
+                <th style="padding: 8px 10px;">Última Actividad</th>
+                <th style="padding: 8px 10px;">Reconocimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 8px 10px; font-weight: 700;">Marte C.</td>
+                <td style="padding: 8px 10px;"><span style="background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 6px;">Básico</span></td>
+                <td style="padding: 8px 10px;">3/11</td>
+                <td style="padding: 8px 10px;">Hoy</td>
+                <td style="padding: 8px 10px;">⭐ Progreso constante</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 8px 10px; font-weight: 700;">Marta E.</td>
+                <td style="padding: 8px 10px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 6px;">Avanzado</span></td>
+                <td style="padding: 8px 10px;">9/11</td>
+                <td style="padding: 8px 10px;">Ayer</td>
+                <td style="padding: 8px 10px;">🎓 Graduada</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 8px 10px; font-weight: 700;">Pedro G.</td>
+                <td style="padding: 8px 10px;"><span style="background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 6px;">Intermedio</span></td>
+                <td style="padding: 8px 10px;">5/11</td>
+                <td style="padding: 8px 10px;">Hace 2 días</td>
+                <td style="padding: 8px 10px;">🌱 En camino</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 10px; font-weight: 700;">Felipe R.</td>
+                <td style="padding: 8px 10px;"><span style="background: #fef3c7; color: #b45309; padding: 2px 8px; border-radius: 6px;">Intermedio</span></td>
+                <td style="padding: 8px 10px;">6/11</td>
+                <td style="padding: 8px 10px;">Hoy</td>
+                <td style="padding: 8px 10px;">🛡️ Experto en Estafas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- VISTA 2: PUBLICAR NUEVA LECCIÓN O TALLER -->
+      <div id="tutor-tab-view-publicar" class="tutor-tab-view" style="display: none;">
+        <div style="background: var(--bg-surface-alt); border: 2px solid var(--border-strong); border-radius: var(--radius-md); padding: 18px; margin-bottom: 16px;">
+          <h4 style="font-size: 1.15rem; margin-bottom: 10px; color: var(--color-primary);">📢 Cargar y Publicar Nueva Actividad Didáctica</h4>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 14px;">
+            Permite al docente crear una lección adaptada a las necesidades inmediatas de su grupo de alumnos (Historia de Usuario 5).
+          </p>
+
+          <form id="form-docente-publish">
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="docente-course-title" class="form-label">Título de la Actividad / Taller:</label>
+              <input type="text" id="docente-course-title" class="form-input" placeholder="Ej: Cómo consultar el saldo de la tarjeta SUBE en el celular" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+              <div>
+                <label for="docente-course-level" class="form-label">Nivel de Aprendizaje:</label>
+                <select id="docente-course-level" class="form-input" style="height: 44px;">
+                  <option value="basico">Nivel 1: Introductorio / Básico</option>
+                  <option value="intermedio" selected>Nivel 2: Medio / Vida Cotidiana</option>
+                  <option value="avanzado">Nivel 3: Autonomía y Seguridad</option>
+                </select>
+              </div>
+              <div>
+                <label for="docente-course-duration" class="form-label">Duración Estimada:</label>
+                <input type="text" id="docente-course-duration" class="form-input" value="15 min">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 14px;">
+              <label for="docente-course-desc" class="form-label">Guía Explicativa Paso a Paso:</label>
+              <textarea id="docente-course-desc" class="form-input" rows="3" placeholder="Escribe los pasos sencillos para que el alumno aprenda a realizar la tarea sin miedo..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; min-height: 48px; font-size: 1.1rem;">
+              <span>🚀</span> Publicar Actividad en el Curso de los Alumnos
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- VISTA 3: GUÍA PEDAGÓGICA Y DECÁLOGO -->
+      <div id="tutor-tab-view-guia" class="tutor-tab-view" style="display: none;">
+        <div id="seccion-recomendaciones-pedagogicas" style="background: #eef7ff; border: 2px solid #b9ddff; border-radius: var(--radius-md); padding: 18px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+            <h4 style="font-size: 1.2rem; color: #0b2545; margin: 0;">📖 Recomendaciones Pedagógicas para Acompañantes</h4>
+            <button type="button" onclick="window.print()" class="btn-audio-mini" title="Imprimir o guardar en PDF" style="font-size: 0.9rem; padding: 6px 12px;">🖨️ Imprimir Guía</button>
+          </div>
+          <p style="font-size: 1rem; color: #1e3a5f; margin-bottom: 12px;">
+            <strong>Regla de oro:</strong> Fomentá su autonomía e independencia. <em>Guiá con paciencia sin resolver los ejercicios por ellos ni sacarles el teléfono de las manos.</em>
+          </p>
+          <ol style="font-size: 0.98rem; line-height: 1.6; color: #2d3748; padding-left: 20px; margin-bottom: 0;">
+            <li><strong>No toques la pantalla por ellos:</strong> Señalá con el dedo en el aire o describí el botón, pero dejá que ellos mismos presionen.</li>
+            <li><strong>Respetá sus tiempos:</strong> No te apures ni muestres impaciencia; cada persona tiene su propio ritmo de lectura y asimilación.</li>
+            <li><strong>Hacé preguntas guía:</strong> En lugar de decir <em>"apretá acá"</em>, preguntale <em>"¿qué botón de la pantalla creés que sirve para mandar el mensaje?"</em>.</li>
+            <li><strong>Normalizá el error:</strong> Recordale que equivocarse no rompe el aparato y que todo tiene marcha atrás.</li>
+            <li><strong>Festejá cada logro:</strong> Un audio enviado o una foto compartida es un gran paso para su autoestima y seguridad digital.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- VISTA 4: MENSAJES DE ALIENTO -->
+      <div id="tutor-tab-view-aliento" class="tutor-tab-view" style="display: none;">
+        <div style="background: var(--bg-surface-alt); border: 2px solid var(--border-strong); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
+          <h4 style="font-size: 1.15rem; margin-bottom: 8px;">💌 Dejale un mensaje de aliento:</h4>
+          <textarea 
+            id="tutor-new-note" 
+            class="form-input" 
+            rows="2" 
+            placeholder="Ejemplo: ¡Genial abu! Estoy muy orgullosa de cómo aprendés a usar WhatsApp..."
+          ></textarea>
+          <button class="btn-action-green" id="btn-send-tutor-note" style="margin-top: 10px; font-size: 1rem; min-height: 44px;">
+            <span>📨</span> Guardar Mensaje para el Alumno
+          </button>
+        </div>
+
+        <h4 style="font-size: 1.15rem; margin-bottom: 8px;">Mensajes de tu Familia y Tutores:</h4>
+        <div id="tutor-notes-stream" class="tutor-notes-stream">
+          <!-- Insertado por app.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       13B. MODAL: 👨‍👩‍👧‍👦 GUÍA Y DECÁLOGO PARA FAMILIARES Y ACOMPAÑANTES
+       ====================================================================== -->
+  <div id="guia-familiares-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="guia-modal-title" aria-hidden="true">
+    <div class="modal-content modal-guia-custom" style="max-width: 740px;">
+      <button class="modal-close-btn" aria-label="Cerrar guía para familiares">✕</button>
+
+      <div class="guia-header-card" style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 16px;">
+        <span style="font-size: 42px;" aria-hidden="true">👨‍👩‍👧‍👦</span>
+        <div>
+          <h2 id="guia-modal-title" style="font-size: 1.55rem; color: var(--color-primary); margin-bottom: 4px;">
+            Guía para Familiares y Acompañantes
+          </h2>
+          <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 0;">
+            Pautas pedagógicas, afectivas y el Decálogo de Oro para enseñar con paciencia y sin frustraciones.
+          </p>
+        </div>
+      </div>
+
+      <!-- Barra de bienvenida y botón de imprimir -->
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+        <span class="hero-badge" style="background: #eef7ff; color: #0077e6; border-color: #b9ddff;">
+          ❤️ "No estás solo. Aprendemos juntos."
+        </span>
+        <button type="button" onclick="window.print()" class="btn-secondary" style="padding: 6px 14px; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 6px;">
+          <span>🖨️</span> Imprimir Guía para la Heladera
+        </button>
+      </div>
+
+      <!-- Selector de pestañas de la guía familiar -->
+      <div class="guia-tabs-bar" style="display: flex; gap: 8px; margin-bottom: 18px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 8px;">
+        <button type="button" class="btn-guia-tab active" id="tab-guia-decalogo" onclick="switchGuiaTab('decalogo')" style="background: var(--color-primary); color: #fff; border: none; border-radius: 20px; padding: 7px 16px; font-weight: 700; cursor: pointer;">
+          📜 Decálogo de Oro (10 Reglas)
+        </button>
+        <button type="button" class="btn-guia-tab" id="tab-guia-aliento" onclick="switchGuiaTab('aliento')" style="background: var(--bg-surface-alt); color: var(--text-primary); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 7px 16px; font-weight: 700; cursor: pointer;">
+          💌 Dejar Mensaje de Aliento
+        </button>
+      </div>
+
+      <!-- VISTA 1: EL DECÁLOGO DE ORO (10 REGLAS PRÁCTICAS) -->
+      <div id="guia-view-decalogo" class="guia-view-tab">
+        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+          <h4 style="font-size: 1.15rem; color: #0b2545; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+            <span>💡</span> La Regla de Oro Fundamental
+          </h4>
+          <p style="font-size: 1.05rem; line-height: 1.55; color: #334155; margin-bottom: 0;">
+            <strong>Las manos en los bolsillos:</strong> Si le sacás el teléfono para resolverlo vos rápido, le quitás la oportunidad de aprender y le generás la sensación de que <em>"esto no es para mí"</em>. Tu rol es ser un faro que guía, no el piloto que maneja.
+          </p>
+        </div>
+
+        <div class="decalogo-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">1️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Hacé preguntas en vez de dar órdenes:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">En lugar de decirle <em>"apretá la flechita"</em>, preguntale: <em>"¿Qué botón en pantalla creés que sirve para mandar el mensaje?"</em>. Eso estimula su memoria y autonomía.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">2️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Respetá sus tiempos biológicos:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">La velocidad de lectura y respuesta motriz cambia con los años, pero la capacidad de aprender sigue intacta. Nunca muestres apuro ni suspires.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">3️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Normalizá el error como juego:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">Recordale siempre: <em>"Tocar la pantalla no rompe el aparato. Todo tiene marcha atrás y botón de volver"</em>. Quitar el miedo es el 80% del éxito.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">4️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Anotale en un cuaderno con letra grande:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">Muchos adultos mayores crecieron con el papel. Escriban juntos un machete numerado (Paso 1, Paso 2, Paso 3) con dibujos de los íconos para que repasen solos.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">5️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Festejá cada pequeño paso:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">Mandar un audio, poner un emoji o abrir una foto es un triunfo enorme para su autoestima. Decile con orgullo: <em>"¡Viste qué bien te salió!"</em>.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">6️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Sesiones cortas de 15 a 20 minutos:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">Es mucho más efectivo practicar 15 minutos mientras toman mate que una maratón de 2 horas que sature y fatigue la vista.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">7️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Enseñale con lo que le gusta:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">No arranques con trámites engorrosos de AFIP o bancos. Arrancá buscando recetas de cocina, fotos de flores, tango o mandando audios a los nietos.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">8️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Validá sus temores a las estafas:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">Si dudan de un mensaje, no te burles diciendo <em>"obvio que es falso"</em>. Felicitá su precaución y decile: <em>"Hiciste muy bien en preguntarme antes de tocar"</em>.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">9️⃣</span>
+            <div>
+              <strong style="color: var(--text-primary);">Configurale el teléfono para su comodidad:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">Agrandale la letra desde los ajustes de su celular, subile el volumen del timbre y dejale en la pantalla principal solo las 4 o 5 aplicaciones que más usa.</div>
+            </div>
+          </div>
+
+          <div class="decalogo-item" style="display: flex; gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 12px 14px; border-radius: 12px;">
+            <span style="font-size: 24px; flex-shrink: 0;">🔟</span>
+            <div>
+              <strong style="color: var(--text-primary);">Disfrutá el puente intergeneracional:</strong>
+              <div style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 2px;">Enseñarles tecnología es una forma profunda de agradecerles todo lo que ellos nos enseñaron en la vida. Es un momento de amor y encuentro.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA 2: DEJAR MENSAJE DE ALIENTO -->
+      <div id="guia-view-aliento" class="guia-view-tab" style="display: none;">
+        <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: var(--radius-md); padding: 18px; margin-bottom: 18px;">
+          <h4 style="font-size: 1.2rem; color: #166534; margin-bottom: 8px;">💌 Escribile una cartita o mensaje de aliento</h4>
+          <p style="font-size: 0.98rem; color: #15803d; margin-bottom: 12px;">
+            Tu mensaje quedará guardado con cariño y el alumno lo verá cuando ingrese a su aula virtual o complete una lección.
+          </p>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="guia-tutor-name" class="form-label">Tu nombre o parentesco (ej: Tu nieta Sofi, Tu hijo Carlos):</label>
+            <input type="text" id="guia-tutor-name" class="form-input" placeholder="Ej: Tu nieta Lucía">
+          </div>
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label for="guia-tutor-msg" class="form-label">Mensaje para el alumno/a:</label>
+            <textarea id="guia-tutor-msg" class="form-input" rows="3" placeholder="Ej: ¡Genial abu! Estoy muy orgullosa de ver cómo practicás en Puente Digital. ¡Te mando un beso enorme!"></textarea>
+          </div>
+          <button type="button" class="btn-action-green" id="btn-save-guia-aliento" style="width: 100%; min-height: 48px; font-size: 1.05rem;">
+            <span>💖</span> Enviar Mensaje de Cariño
+          </button>
+        </div>
+
+        <h4 style="font-size: 1.15rem; margin-bottom: 10px;">Mensajes de aliento guardados:</h4>
+        <div id="guia-notes-stream" class="tutor-notes-stream">
+          <!-- Insertado dinámicamente -->
+        </div>
       </div>
 
     </div>
@@ -1608,6 +1901,7 @@
        ====================================================================== -->
   <div id="videocall-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="vc-modal-title" aria-hidden="true">
     <div class="modal-content modal-videocall-screen">
+      <button class="modal-close-btn" aria-label="Cerrar videollamada">✕</button>
       <div class="videocall-header-bar">
         <div style="font-size: 1.2rem; font-weight: 800;">📹 Videollamada con Sofía (Nieta)</div>
         <div style="font-size: 1rem;" id="videocall-timer">00:15 • Conectado</div>
@@ -1646,19 +1940,19 @@
     </a>
     <a href="#cursos-section" class="bnav-item">
       <span class="bnav-icon">📚</span>
-      <span class="bnav-label">Aprender</span>
+      <span class="bnav-label">Cursos</span>
     </a>
     <a href="#taller-practico" class="bnav-item">
       <span class="bnav-icon">🧪</span>
-      <span class="bnav-label">Practicar</span>
+      <span class="bnav-label">Taller</span>
     </a>
-    <button class="bnav-item trigger-open-companion" aria-label="Abrir mi compañero con Inteligencia Artificial">
-      <span class="bnav-icon">🤖</span>
-      <span class="bnav-label">Compañero IA</span>
-    </button>
-    <button class="bnav-item trigger-open-profile" aria-label="Abrir mi perfil y logros">
-      <span class="bnav-icon">👤</span>
-      <span class="bnav-label">Mi Perfil</span>
+    <a href="#seguridad-section" class="bnav-item">
+      <span class="bnav-icon">🛡️</span>
+      <span class="bnav-label">Seguridad</span>
+    </a>
+    <button class="bnav-item trigger-open-guia-familiares" aria-label="Abrir guía para familiares y acompañantes">
+      <span class="bnav-icon">👨‍👩‍👦</span>
+      <span class="bnav-label">Familia</span>
     </button>
   </nav>
 

@@ -1,7 +1,7 @@
 /**
  * Puente Digital - Servidor HTTP Local con Soporte para API de IA
  * Trabajo Integrador Final
- * Autores: Calogerópulos Alexandro, Centurión Tomás Gabriel, Centurion Valeria Analia, Mari Rony Sebastián, Rodríguez Santiago Adrián
+ * Autores: MARI, Rony Sebastián; CENTURIÓN, Tomás Gabriel; RODRÍGUEZ, Santiago Adrián; CALOGERÓPULOS, Alexandro; CENTURIÓN, Valeria Analía
  */
 
 const http = require('http');
@@ -140,7 +140,12 @@ function createServer(port) {
       const ext = path.extname(filePath).toLowerCase();
       const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-      res.writeHead(200, { 'Content-Type': contentType });
+      res.writeHead(200, {
+        'Content-Type': contentType,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      });
       const readStream = fs.createReadStream(filePath);
       readStream.pipe(res);
     });

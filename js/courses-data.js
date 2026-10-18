@@ -9,11 +9,11 @@ const PUENTE_DATA = {
     slogan: "No estás solo. Aprendemos juntos.",
     secondarySlogan: "El puente que te acerca a la tecnología, fácil y a tu propio ritmo",
     teamMembers: [
-      { name: "Calogerópulos Alexandro", role: "Investigación y Contenidos" },
-      { name: "Centurión Tomás Gabriel", role: "Diseño y Experiencia de Usuario" },
-      { name: "Centurion Valeria Analia", role: "Pedagogía y Accesibilidad" },
-      { name: "Mari Rony Sebastián", role: "Desarrollo y Arquitectura Web" },
-      { name: "Rodríguez Santiago Adrián", role: "Pruebas y Seguridad Digital" }
+      { name: "MARI, Rony Sebastián", role: "Desarrollo y Arquitectura Web" },
+      { name: "CENTURIÓN, Tomás Gabriel", role: "Diseño y Experiencia de Usuario" },
+      { name: "RODRÍGUEZ, Santiago Adrián", role: "Pruebas y Seguridad Digital" },
+      { name: "CALOGERÓPULOS, Alexandro", role: "Investigación y Gestión de Proyecto" },
+      { name: "CENTURIÓN, Valeria Analía", role: "QA Tester y Pedagogía" }
     ],
     summary: "Propuesta educativa de alfabetización digital orientada a reducir la brecha tecnológica en personas mayores, brindando herramientas prácticas para la autonomía, comunicación y seguridad en la vida cotidiana."
   },
