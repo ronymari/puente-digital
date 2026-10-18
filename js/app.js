@@ -191,12 +191,16 @@ function initAccessibility() {
     localStorage.setItem('puente_font_scale', scale);
 
     fontButtons.forEach(btn => {
-      if (btn) btn.classList.remove('active');
+      if (btn) {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+      }
     });
 
     if (scale === '1' && btnFontNormal) btnFontNormal.classList.add('active');
     else if (scale === '1.18' && btnFontLarge) btnFontLarge.classList.add('active');
     else if (scale === '1.35' && btnFontXlarge) btnFontXlarge.classList.add('active');
+    fontButtons.find(btn => btn?.classList.contains('active'))?.setAttribute('aria-pressed', 'true');
 
     announceAccessibilityChange(`Tamaño de letra ajustado`);
   }
@@ -452,6 +456,8 @@ function processLogin(username, password) {
 
 function updateUIForAuthState() {
   const logged = getLoggedUser();
+  document.body.classList.toggle('has-session', !!logged);
+  document.body.classList.toggle('is-teacher', logged?.role === 'DOCENTE');
   const navAuthVisitor = document.getElementById('nav-auth-visitor');
   const navAuthLogged = document.getElementById('nav-auth-logged');
   const userGreetingName = document.getElementById('user-greeting-name');
@@ -502,6 +508,7 @@ function updateUIForAuthState() {
     renderCoursesGrid();
     if (typeof renderDashboard2 === 'function') renderDashboard2();
   }
+  if (typeof window.syncMobileLayout === 'function') window.syncMobileLayout();
 }
 
 function openModal(modalEl) {
@@ -1095,10 +1102,29 @@ function initWhatsAppSimulator() {
   }
 
   let audioRecordingTimeout = null;
+  let audioRecordingActive = false;
+
+  document.getElementById('btn-mobile-cancel-audio')?.addEventListener('click', () => {
+    if (audioRecordingTimeout) clearTimeout(audioRecordingTimeout);
+    audioRecordingTimeout = null;
+    audioRecordingActive = false;
+    if (recBanner) recBanner.style.display = 'none';
+    btnRecordAudio?.focus({ preventScroll: true });
+    showToast('Audio cancelado', 'No enviaste ningún audio. Podés volver a intentarlo.', 'info');
+  });
 
   function triggerAudioRecording() {
+    const isMobile = window.isMobileLayout?.();
+    if (isMobile && audioRecordingActive) return;
+    audioRecordingActive = true;
     if (recBanner) recBanner.style.display = 'flex';
     playTone(700, 0.15);
+    if (isMobile) {
+      showToast('Audio de práctica', 'Tomate tu tiempo. Elegí Enviar audio ahora o Cancelar audio.', 'info');
+      recBanner?.scrollIntoView({ block: 'center', behavior: 'instant' });
+      btnCancelRec?.focus({ preventScroll: true });
+      return;
+    }
     showToast('Grabando audio', 'Hablale a tu teléfono con tranquilidad. En 3 segundos se enviará...', 'info');
 
     audioRecordingTimeout = setTimeout(() => {
@@ -1107,7 +1133,10 @@ function initWhatsAppSimulator() {
   }
 
   function finishAudioRecording() {
+    if (window.isMobileLayout?.() && !audioRecordingActive) return;
     if (audioRecordingTimeout) clearTimeout(audioRecordingTimeout);
+    audioRecordingTimeout = null;
+    audioRecordingActive = false;
     if (recBanner) recBanner.style.display = 'none';
 
     const now = new Date();
@@ -1346,6 +1375,10 @@ function renderLessonStep() {
   if (btnPrev) btnPrev.style.display = currentStepIndex === 0 ? 'none' : 'inline-flex';
   if (btnNext) btnNext.style.display = currentStepIndex === totalSteps - 1 ? 'none' : 'inline-flex';
   if (btnComplete) btnComplete.style.display = currentStepIndex === totalSteps - 1 ? 'inline-flex' : 'none';
+  if (window.isMobileLayout?.()) {
+    const reading = document.querySelector('#lesson-modal .lesson-reading');
+    if (reading) reading.scrollTop = 0;
+  }
 }
 
 function closeLessonModal() {
@@ -1426,10 +1459,10 @@ function initBottomNavMobile() {
   window.addEventListener('scroll', () => {
     const scrollPos = window.scrollY + 200;
     const sections = [
-      { id: 'inicio', item: document.querySelector('.bottom-nav-mobile a[href="#inicio"]') },
+      { id: 'inicio', item: document.querySelector('[data-mobile-home]') },
+      { id: 'aula-virtual-section', item: document.querySelector('[data-mobile-home]') },
       { id: 'cursos-section', item: document.querySelector('.bottom-nav-mobile a[href="#cursos-section"]') },
-      { id: 'taller-practico', item: document.querySelector('.bottom-nav-mobile a[href="#taller-practico"]') },
-      { id: 'seguridad-section', item: document.querySelector('.bottom-nav-mobile a[href="#seguridad-section"]') }
+      { id: 'taller-practico', item: document.querySelector('.bottom-nav-mobile a[href="#taller-practico"]') }
     ];
 
     for (let i = sections.length - 1; i >= 0; i--) {

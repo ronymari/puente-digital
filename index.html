@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
 
@@ -30,10 +31,10 @@
       
       <!-- Controles de tamaño de letra -->
       <div class="accessibility-group" role="group" aria-label="Ajustar tamaño de la letra">
-        <span class="accessibility-label">🔍 Letra:</span>
-        <button id="btn-font-normal" class="acc-btn active" title="Tamaño de letra normal">A</button>
-        <button id="btn-font-large" class="acc-btn" title="Tamaño de letra grande">A+</button>
-        <button id="btn-font-xlarge" class="acc-btn" title="Tamaño de letra muy grande">A++</button>
+        <span class="accessibility-label"><span class="desktop-only">🔍 Letra:</span><span class="mobile-only">Tamaño de letra</span></span>
+        <button id="btn-font-normal" class="acc-btn active" title="Tamaño de letra normal"><span class="desktop-only">A</span><span class="mobile-only">Normal</span></button>
+        <button id="btn-font-large" class="acc-btn" title="Tamaño de letra grande"><span class="desktop-only">A+</span><span class="mobile-only">Grande</span></button>
+        <button id="btn-font-xlarge" class="acc-btn" title="Tamaño de letra muy grande"><span class="desktop-only">A++</span><span class="mobile-only">Más grande</span></button>
       </div>
 
       <!-- Controles de Modo Visual, Voz y Emergencia -->
@@ -55,7 +56,7 @@
         </button>
 
         <button id="btn-help-top" class="acc-btn" title="Preguntas frecuentes y ayuda rápida de uso">
-          ❓ Ayuda
+          <span class="desktop-only">❓ Ayuda</span><span class="mobile-only">❓ Necesito ayuda</span>
         </button>
 
         <button id="btn-top-sos" class="acc-btn acc-btn-urgent" title="¿Tenés una urgencia digital? Tocá acá">
@@ -143,12 +144,20 @@
             </div>
 
             <h1 id="hero-title" class="hero-title">
-              Aprender a usar tu celular y computadora es <span class="gradient-text">más fácil de lo que crees</span>
+              <span class="desktop-only">Aprender a usar tu celular y computadora es <span class="gradient-text">más fácil de lo que crees</span></span>
+              <span class="mobile-only">Aprendé a usar tu celular, paso a paso</span>
             </h1>
 
             <p id="hero-welcome-text" class="hero-lead">
-              ¡Te damos una cálida bienvenida a <strong>Puente Digital</strong>! <strong>No estás solo, aprendemos juntos.</strong> Aquí no usamos palabras raras ni tecnicismos. Te acompañamos paso a paso para comunicarte con tus seres queridos, descargar aplicaciones seguras, hacer trámites y navegar con total tranquilidad.
+              <span class="desktop-only">¡Te damos una cálida bienvenida a <strong>Puente Digital</strong>! <strong>No estás solo, aprendemos juntos.</strong> Aquí no usamos palabras raras ni tecnicismos. Te acompañamos paso a paso para comunicarte con tus seres queridos, descargar aplicaciones seguras, hacer trámites y navegar con total tranquilidad.</span>
+              <span class="mobile-only">Te acompañamos sin apuro. No necesitás saber de tecnología para empezar.</span>
             </p>
+
+            <div class="mobile-only mobile-entry-actions" aria-label="Elegí cómo empezar">
+              <button class="btn-primary trigger-open-login">🔑 Entrar a mis clases</button>
+              <button class="btn-secondary trigger-open-register">📝 Crear mi cuenta gratis</button>
+              <button class="btn-secondary trigger-open-support">🤝 Necesito ayuda para entrar</button>
+            </div>
 
             <div class="hero-assurance" role="note">
               <span class="hero-assurance-icon" aria-hidden="true">💡</span>
@@ -157,7 +166,7 @@
               </p>
             </div>
 
-            <div style="margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <div class="hero-voice-actions" style="margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap;">
               <button id="btn-read-hero" class="btn-read-hero" title="Escuchar este mensaje en voz alta" aria-label="Escuchar mensaje de bienvenida en voz alta">
                 <span>🔊</span> Escuchar Bienvenida
               </button>
@@ -287,6 +296,7 @@
             <h2 id="classroom-heading" class="classroom-greeting">
               👋 ¡Hola, <span id="classroom-greeting-name">Estudiante</span>!
             </h2>
+            <p class="mobile-only mobile-reassurance">Vamos a tu ritmo. Podés volver atrás cuando lo necesites.</p>
             <p class="dashboard-reassurance-quote">
               <em>"No estás solo. Aprendemos juntos. Tocar la pantalla no rompe nada y todo tiene marcha atrás. Vamos a tu propio ritmo."</em>
             </p>
@@ -318,7 +328,7 @@
             </p>
             <div class="next-lesson-meta" id="next-lesson-meta">⏱️ 15 min de lectura fácil • Nivel 1</div>
             <button class="btn-primary btn-resume-learning" id="btn-resume-learning">
-              <span>▶</span> Continuar Lección
+              <span>▶</span> <span class="desktop-only">Continuar Lección</span><span class="mobile-only">Continuar mi clase</span>
             </button>
           </div>
         </div>
@@ -594,10 +604,10 @@
                         🔍
                       </button>
                       <button class="btn-phone-action" id="btn-sim-videocall" title="Hacer una videollamada de prueba">
-                        📹
+                        📹 <span class="mobile-only">Videollamada</span>
                       </button>
                       <button class="btn-phone-action" id="btn-sim-voicecall" title="Llamar con voz">
-                        📞
+                        📞 <span class="mobile-only">Llamar</span>
                       </button>
                     </div>
                   </div>
@@ -613,7 +623,8 @@
                   <div class="chat-audio-recording-banner" id="chat-recording-banner" style="display: none;">
                     <span class="recording-pulse">🔴</span>
                     <span>Grabando audio de voz... (hablá tranquilo)</span>
-                    <button class="btn-cancel-rec" id="btn-cancel-audio-rec">Soltar para enviar</button>
+                    <button class="btn-cancel-rec" id="btn-cancel-audio-rec"><span class="desktop-only">Soltar para enviar</span><span class="mobile-only">Enviar audio ahora</span></button>
+                    <button class="mobile-only btn-secondary" id="btn-mobile-cancel-audio" type="button">Cancelar audio</button>
                   </div>
 
                   <!-- Opciones rápidas sugeridas -->
@@ -624,7 +635,7 @@
                   <!-- Barra de entrada de texto, foto y micrófono -->
                   <div class="chat-input-bar">
                     <button class="chat-attach-btn" id="btn-sim-attach-photo" title="Mandar una fotografía familiar">
-                      📎
+                      📎 <span class="mobile-only">Enviar foto</span>
                     </button>
                     <input 
                       type="text" 
@@ -634,10 +645,10 @@
                       aria-label="Escribir mensaje de respuesta"
                     >
                     <button class="chat-mic-btn" id="btn-sim-record-audio" title="Grabar y mandar un audio de voz">
-                      🎙️
+                      🎙️ <span class="mobile-only">Enviar audio</span>
                     </button>
                     <button class="chat-send-btn" id="chat-send-btn" aria-label="Enviar mensaje">
-                      ➤
+                      ➤ <span class="mobile-only">Enviar mensaje</span>
                     </button>
                   </div>
 
@@ -1222,6 +1233,7 @@
       
       <button id="btn-close-lesson-modal" class="modal-close-btn" aria-label="Cerrar lección">✕</button>
 
+      <div class="lesson-reading">
       <div class="modal-step-indicator">
         <span class="modal-step-badge" id="modal-step-badge">Paso 1 de 4</span>
         <span id="modal-course-category" style="font-size: 0.95rem; color: var(--text-muted);"></span>
@@ -1244,6 +1256,7 @@
 
       <div class="modal-tip-box" id="modal-step-tip" role="note">
         Consejo útil o advertencia amigable.
+      </div>
       </div>
 
       <div class="modal-nav-actions">
@@ -1278,6 +1291,18 @@
       <h2 id="help-modal-title" style="font-size: 1.7rem; margin-bottom: 14px; color: var(--color-primary);">
         📞 ¿Cómo te podemos ayudar?
       </h2>
+
+      <div class="mobile-only mobile-help-tools">
+        <button class="btn-secondary" type="button" data-mobile-action="letters">🔍 Cambiar el tamaño de letra</button>
+        <button class="btn-secondary" type="button" data-mobile-control="btn-contrast-toggle">🌗 Cambiar el contraste</button>
+        <button class="btn-secondary" type="button" data-mobile-control="btn-top-companion">💬 Hacer una pregunta</button>
+        <button class="btn-secondary" type="button" data-mobile-control="btn-top-sos">🛡️ Me preocupa un mensaje o una página</button>
+        <button class="btn-secondary" type="button" data-mobile-control="btn-voice-speed">🔊 Cambiar la velocidad de lectura</button>
+        <button class="btn-secondary" type="button" data-mobile-action="family">👨‍👩‍👦 Guía para acompañantes</button>
+        <button class="btn-secondary" type="button" data-mobile-action="security">🛡️ Ver consejos para cuidarme</button>
+        <button class="btn-secondary mobile-account-tool" type="button" data-mobile-control="btn-nav-profile">🏅 Ver mis logros y preferencias</button>
+        <button class="btn-secondary mobile-teacher-tool" type="button" data-mobile-control="btn-nav-tutor">📊 Abrir el panel docente</button>
+      </div>
 
       <p style="font-size: 1.15rem; line-height: 1.6; margin-bottom: 20px;">
         Si algo te parece difícil o tienes dudas con alguna lección o con tu cuenta, estamos para acompañarte:
@@ -1934,25 +1959,21 @@
        16. BARRA DE NAVEGACIÓN INFERIOR MÓVIL ACCESIBLE (BOTTOM NAV BAR)
        ====================================================================== -->
   <nav class="bottom-nav-mobile" aria-label="Navegación rápida inferior en celular">
-    <a href="#inicio" class="bnav-item active">
+    <a href="#inicio" class="bnav-item active" data-mobile-home>
       <span class="bnav-icon">🏠</span>
       <span class="bnav-label">Inicio</span>
     </a>
     <a href="#cursos-section" class="bnav-item">
       <span class="bnav-icon">📚</span>
-      <span class="bnav-label">Cursos</span>
+      <span class="bnav-label">Mis clases</span>
     </a>
     <a href="#taller-practico" class="bnav-item">
       <span class="bnav-icon">🧪</span>
-      <span class="bnav-label">Taller</span>
+      <span class="bnav-label">Práctica</span>
     </a>
-    <a href="#seguridad-section" class="bnav-item">
-      <span class="bnav-icon">🛡️</span>
-      <span class="bnav-label">Seguridad</span>
-    </a>
-    <button class="bnav-item trigger-open-guia-familiares" aria-label="Abrir guía para familiares y acompañantes">
-      <span class="bnav-icon">👨‍👩‍👦</span>
-      <span class="bnav-label">Familia</span>
+    <button class="bnav-item" id="btn-mobile-help" aria-label="Necesito ayuda">
+      <span class="bnav-icon">❓</span>
+      <span class="bnav-label">Ayuda</span>
     </button>
   </nav>
 
@@ -1966,5 +1987,6 @@
   <script src="js/storage-service.js"></script>
   <script src="js/ai-service.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/mobile.js"></script>
 </body>
 </html>
